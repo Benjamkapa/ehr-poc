@@ -9,7 +9,7 @@ import Refferals from "../pages/referrals/Refferals";
 
 const router = createBrowserRouter(
     [
-  {
+     {
     path: "/",
     element: (
           <Home/>
@@ -42,10 +42,12 @@ const router = createBrowserRouter(
 ],
 
   {
-  basename: process.env.NODE_ENV === 'development' ? '/' : '/wanene-ehr/dist/',
-    // basename:"/wanene-ehr/dist"
-  }
-  
+  basename: import.meta.env.MODE === 'development' ? '/' : '/wanene-ehr/dist/',
+}
+
+
+
+
 );
 
 export default router;
