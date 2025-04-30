@@ -41,10 +41,11 @@ const router = createBrowserRouter(
   },
 ],
 
-{
-    basename:"/wanene-ehr/dist"
+  {
+  basename: process.env.NODE_ENV === 'development' ? '/' : '/wanene-ehr/dist/',
+    // basename:"/wanene-ehr/dist"
   }
-
+  
 );
 
 export default router;
