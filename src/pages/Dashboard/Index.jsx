@@ -36,7 +36,7 @@ const Index = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h1 className='font-bold'>Dashboard</h1>
+      <h1 className='font-bold uppercase text-xl text-center'>Dashboard</h1>
       <div
         style={{
           display: 'grid',
@@ -56,10 +56,10 @@ const Index = () => {
               padding: '20px',
               textAlign: 'center',
               userSelect: 'none',
-              boxShadow: '2px 2px 6px rgba(0,0,0,0.1)',
-              transition: 'transform 0.2s',
+              boxShadow: '2px 2px 6px rgba(0,0,0,0.3)',
+              transition: 'transform 0.6s',
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.04)')}
             onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
           >
             <div style={{ fontSize: '40px' }}>{tab.icon}</div>

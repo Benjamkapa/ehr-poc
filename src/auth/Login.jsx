@@ -1,4 +1,8 @@
 import React from "react";
+import { CgLogIn } from "react-icons/cg";
+import { HiOutlineLogin } from "react-icons/hi";
+import { LuLogIn } from "react-icons/lu";
+import { SlLogin } from "react-icons/sl";
 
 const InputField = ({ id, label, type, value, onChange }) => (
   <div className="mb-4">
@@ -49,9 +53,10 @@ const Login = ({ email, password, setEmail, setPassword, handleSubmit, error }) 
 
         <button
           type="submit"
-          className="w-full bg-primary text-white py-2 rounded hover:bg-blue-800 transition duration-100"
+          className="justify-center mx-auto block w-2/3 bg-primary text-white py-2 rounded-full hover:bg-blue-800 transition duration-100"
         >
-          Login
+          Login 
+          <HiOutlineLogin className="inline-block ml-2" />
         </button>
       </form>
     </div>
