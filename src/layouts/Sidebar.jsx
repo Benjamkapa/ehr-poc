@@ -1,69 +1,3 @@
-// import { NavLink } from "react-router-dom";
-// import {BsPeopleFill} from "react-icons/bs";
-// import { FiMenu, FiHome } from "react-icons/fi";
-// import { SlCalender } from "react-icons/sl";
-// import { BsPrescription2 } from "react-icons/bs";
-// import { VscReferences } from "react-icons/vsc";
-
-
-
-
-// const menuItems = [
-//   { icon: <FiHome size={24} />, label: "Dashboard", path: "/" },
-//   { icon: <SlCalender size={24} />, label: "Appointments", path: "/appointments" },
-//   { icon: <BsPrescription2 size={24} />, label: "Prescription", path: "/prescription" },
-//   { icon: <BsPeopleFill size={24} />, label: "Patients", path: "/patients" },
-//   { icon: <VscReferences size={24} />, label: "Referrals", path: "/referrals" },
-// ]; 
-
-// const Sidebar  = ({ isCollapsed, setIsCollapsed })  => {
-//   return (
-//     <div
-//       className={`fixed top-0 left-0 h-screen bg-white  flex flex-col transition-all duration-300 text-sm ${
-//         isCollapsed ? "w-20" : "w-60"
-//       }`}
-//     >
-//       {/* Sidebar Toggle Button */}
-//       <button
-//         className="text-white mb-5 p-5 bg-primary  flex items-center justify-between cursor-pointer"
-//         onClick={() => setIsCollapsed(!isCollapsed)}
-//       >
-//         {!isCollapsed && <span className="text-white font-bold text-md">DR WANENE EHR</span>}
-//         <FiMenu size={24} />
-//       </button>
-
-//       {/* Menu Items */}
-//       <ul className="flex flex-col space-y-4 p-4">
-//         {menuItems.map((item, index) => (
-//           <li key={index} className="relative group">
-//             <NavLink
-//               to={item.path}
-//               className={({ isActive }) =>
-//                 `flex items-center space-x-2 p-2 rounded-md transition-all duration-200 ${
-//                   isActive ? "bg-primary text-white font-bold" : ""
-//                 }`
-//               }
-//             >
-//               {item.icon}
-//               {!isCollapsed && <span>{item.label}</span>}
-//             </NavLink>
-
-//             {/* Tooltip (Only visible when collapsed) */}
-//             {isCollapsed && (
-//               <span className="absolute left-12 bg-black text-white text-sm px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-//                 {item.label}
-//               </span>
-//             )}
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Sidebar;
-
-
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
@@ -74,15 +8,18 @@ import { FiMenu, FiHome } from "react-icons/fi";
 import { SlCalender } from "react-icons/sl";
 import { VscReferences } from "react-icons/vsc";
 import { RiMoneyDollarBoxLine } from "react-icons/ri";
-import { FaAngleRight } from "react-icons/fa6";
+import { FaAngleRight, FaHospitalUser } from "react-icons/fa6";
 import { LiaStethoscopeSolid } from "react-icons/lia";
+import { useAuth } from "../auth/useAuth";
+import { MdDashboard } from "react-icons/md";
+import Patients from "../pages/patients/Patients";
 
 const staticMenuItems = [
-  { icon: <FiHome size={20} />, label: "Dashboard", path: "/" },
-  { icon: <SlCalender size={20} />, label: "Appointments", path: "/appointments" },
-  { icon: <BsPrescription2 size={20} />, label: "Prescription", path: "/prescription" },
-  { icon: <BsPeopleFill size={20} />, label: "Patients", path: "/patients" },
-  { icon: <VscReferences size={20} />, label: "Referrals", path: "/referrals" },
+  { icon: <MdDashboard size={20} />, label: "Dashboard", path: "/app", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
+  { icon: <SlCalender size={20} />, label: "Appointments", path: "/app/appointments", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
+  { icon: <BsPrescription2 size={20} />, label: "Prescription", path: "/app/prescription", roles: ["admin", "doctor", "pharmacist", "hospital administrator"] },
+  { icon: <FaHospitalUser size={20} />, label: "Patients", path: "/app/patients", roles: ["admin", "doctor", "nurse", "receptionist", "hospital administrator"] },
+  { icon: <VscReferences size={20} />, label: "Referrals", path: "/app/referrals", roles: ["admin", "doctor", "nurse", "receptionist", "hospital administrator"] },
 ];
 
 const collapsibleItems = [
@@ -90,12 +27,14 @@ const collapsibleItems = [
     key: "billing",
     icon: <RiMoneyDollarBoxLine size={20} />,
     label: "Billing",
+    roles: ["admin", "cashier", "hospital administrator"],
     children: ["Patients Bills", "Over the Counter", "Receipts"],
   },
   {
     key: "clinical",
     icon: <LiaStethoscopeSolid size={20} />,
     label: "Clinical",
+    roles: ["admin", "doctor", "nurse", "lab technician"],
     children: ["Vitals", "Consultations", "Lab Orders"],
   },
 ];
@@ -103,6 +42,7 @@ const collapsibleItems = [
 const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
+  const { user } = useAuth();
 
   const toggleDropdown = (key) => {
     setActiveDropdown(prev => (prev === key ? null : key));
@@ -113,7 +53,6 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
   return (
     <div
       className={`fixed top-0 left-0 h-screen bg-white flex flex-col text-sm z-50 transition-all duration-300 ${sidebarWidth}`}
-
     >
       {/* Toggle button */}
       <button
@@ -121,7 +60,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
         onClick={() => setIsCollapsed(!isCollapsed)}
       >
         {!isCollapsed  || isHovering? (
-          <span className="text-white font-bold text-md">DR WANENE EHR</span>
+          <span className="text-white font-bold text-md">EHR System</span>
         ) : null}
         <FiMenu size={24} />
       </button>
@@ -129,10 +68,11 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
       {/* Menu */}
       <ul  onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)} className="flex flex-col pl-2">
-        {staticMenuItems.map((item, idx) => (
+        {staticMenuItems.filter(item => item.roles.includes(user?.role)).map((item, idx) => (
           <li key={idx}>
             <NavLink
               to={item.path}
+              end={item.path === "/app"}
               className={({ isActive }) =>
                 `flex items-center space-x-2 p-2 rounded-md transition-all duration-200 ${
                   isActive ? "text-primary font-bold" : ""
@@ -145,7 +85,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
           </li>
         ))}
 
-        {collapsibleItems.map(({ key, icon, label, children }) => (
+        {collapsibleItems.filter(item => item.roles.includes(user?.role)).map(({ key, icon, label, children }) => (
           <li key={key}>
             <div
               onClick={() => toggleDropdown(key)}

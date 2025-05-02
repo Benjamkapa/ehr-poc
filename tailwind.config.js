@@ -16,9 +16,11 @@ export default {
         success: '#36D399',
         warning: '#FBBD23',
         error: '#F87272',
-      }
+      },
+      fontFamily: {
+        sans: ['Avenir', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
     },
   },
   plugins: [],
 }
-

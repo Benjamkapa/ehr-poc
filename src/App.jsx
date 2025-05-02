@@ -1,14 +1,18 @@
-import { RouterProvider } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import router from "./router/AppRouter"
-
+import { AuthProvider } from "./auth/useAuth";
+import AutoLogoutHandler from "./auth/AutoLogoutHandler";
+import AppRoutes from "./router/AppRoutes";
 
 const App = () => {
-
   return (
     <>
-  
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <BrowserRouter>
+          <AutoLogoutHandler />
+          <AppRoutes />
+        </BrowserRouter>
+      </AuthProvider>
 
       <Toaster />
     </>

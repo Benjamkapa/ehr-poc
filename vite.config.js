@@ -7,4 +7,5 @@ dotenv.config()
 export default defineConfig(({ mode }) => ({
   plugins: [react()],
   base: mode === 'development' ? '/' : '/wanene-ehr/dist/',
+  
 }));
