@@ -1,21 +1,21 @@
-import { BrowserRouter } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./auth/useAuth";
 import AutoLogoutHandler from "./auth/AutoLogoutHandler";
-import AppRoutes from "./router/AppRoutes";
+import router from "./router/AppRouter";
 
 const App = () => {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <AuthProvider>
-        <BrowserRouter>
-          <AutoLogoutHandler />
-          <AppRoutes />
-        </BrowserRouter>
+        <div className="flex-grow">
+          <RouterProvider router={router}>
+            <AutoLogoutHandler />
+          </RouterProvider>
+        </div>
       </AuthProvider>
-
       <Toaster />
-    </>
+    </div>
   );
 };
 

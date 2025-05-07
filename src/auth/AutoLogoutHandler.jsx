@@ -24,7 +24,7 @@ const AutoLogoutHandler = () => {
       clearTimeout(timerId.current);
     }
     // Set inactivity timeout to 15 seconds
-    timerId.current = setTimeout(logoutAfterTimeout, 60000);
+    timerId.current = setTimeout(logoutAfterTimeout, 600000);
   };
 
   useEffect(() => {

@@ -10,11 +10,10 @@ const TwoFactorAuth = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // For POC, hardcode the 2FA code as "123456"
-    if (code === "123456") {
+    // For POC, hardcode the 2FA code as "4444"
+    if (code === "4444") {
       auth.verify2FA();
-      const redirectPath = auth.user ? "/app" : "/";
-      navigate(redirectPath);
+      navigate("/app");
     } else {
       setError("Invalid 2FA code");
     }
@@ -50,7 +49,7 @@ const TwoFactorAuth = () => {
 
         <button
           type="submit"
-          className="w-full bg-primary text-white py-2 rounded hover:bg-blue-800 transition duration-100"
+          className="w-full bg-primary text-white py-2 rounded-full mt-5 hover:bg-blue-800 transition duration-100"
         >
           Verify
         </button>

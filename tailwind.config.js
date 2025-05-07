@@ -17,9 +17,9 @@ export default {
         warning: '#FBBD23',
         error: '#F87272',
       },
-      fontFamily: {
-        sans: ['Avenir', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-      },
+      // fontFamily: {
+      //   sans: ['Avenir', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      // },
     },
   },
   plugins: [],

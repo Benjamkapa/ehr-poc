@@ -1,5 +1,11 @@
-import { createBrowserRouter } from "react-router-dom";
+import React from "react";
+import {
+  createBrowserRouter,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
 import "../App.css";
+
 import LoginContainer from "../auth/LoginContainer";
 import TwoFactorAuth from "../auth/TwoFactorAuth";
 import Home from "../pages/Home";
@@ -8,6 +14,40 @@ import Appointments from "../pages/appointments/Appointments";
 import Prescription from "../pages/prescription/Prescription";
 import Patients from "../pages/patients/Patients";
 import Refferals from "../pages/referrals/Refferals";
+import Pharmacy from "../pages/pharmacy/Pharmacy";
+import Laboratory from "../pages/Laboratory/Laboratory";
+
+import { useAuth } from "../auth/useAuth";
+
+// Role whitelist
+const roleAllowed = [
+  "admin",
+  "doctor",
+  "nurse",
+  "receptionist",
+  "pharmacist",
+  "lab technician",
+  "cashier",
+  "hospital administrator",
+  "patient",
+  "triage nurse",
+];
+
+// Auth guard component
+const AuthWrapper = ({ children }) => {
+  const { user, twoFactorVerified, loading } = useAuth();
+
+  if (loading) {
+    // While loading auth state, render nothing or a loading spinner
+    return null;
+  }
+
+  if (!user) return <Navigate to="/" replace />;
+  if (!twoFactorVerified) return <Navigate to="/2fa" replace />;
+  if (!roleAllowed.includes(user.role)) return <Navigate to="/" replace />;
+
+  return children || <Outlet />;
+};
 
 const router = createBrowserRouter(
   [
@@ -21,33 +61,29 @@ const router = createBrowserRouter(
     },
     {
       path: "/app",
-      element: <Home />,
+      element: (
+        <AuthWrapper>
+          <Home />
+        </AuthWrapper>
+      ),
       children: [
-        {
-          index: true,
-          element: <Index />,
-        },
-        {
-          path: "appointments",
-          element: <Appointments />,
-        },
-        {
-          path: "prescription",
-          element: <Prescription />,
-        },
-        {
-          path: "patients",
-          element: <Patients />,
-        },
-        {
-          path: "referrals",
-          element: <Refferals />,
-        },
+        { index: true, element: <Index /> },
+        { path: "appointments", element: <Appointments /> },
+        { path: "prescription", element: <Prescription /> },
+        { path: "patients", element: <Patients /> },
+        { path: "referrals", element: <Refferals /> },
+        { path: "pharmacy", element: <Pharmacy /> },
+        { path: "laboratory", element: <Laboratory /> },
       ],
+    },
+    {
+      path: "*",
+      element: <Navigate to="/" replace />,
     },
   ],
   {
-    basename: import.meta.env.MODE === "development" ? "/" : "/wanene-ehr/dist/",
+    basename:"/",
+    // basename: import.meta.env.MODE === "development" ? "/" : "/wanene-ehr/dist/",
   }
 );
 

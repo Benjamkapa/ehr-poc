@@ -11,8 +11,9 @@ import { RiMoneyDollarBoxLine } from "react-icons/ri";
 import { FaAngleRight, FaHospitalUser } from "react-icons/fa6";
 import { LiaStethoscopeSolid } from "react-icons/lia";
 import { useAuth } from "../auth/useAuth";
-import { MdDashboard } from "react-icons/md";
+import { MdDashboard, MdLocalPharmacy, MdOutlineLocalPharmacy } from "react-icons/md";
 import Patients from "../pages/patients/Patients";
+import { FaHospitalSymbol } from "react-icons/fa";
 
 const staticMenuItems = [
   { icon: <MdDashboard size={20} />, label: "Dashboard", path: "/app", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
@@ -20,6 +21,9 @@ const staticMenuItems = [
   { icon: <BsPrescription2 size={20} />, label: "Prescription", path: "/app/prescription", roles: ["admin", "doctor", "pharmacist", "hospital administrator"] },
   { icon: <FaHospitalUser size={20} />, label: "Patients", path: "/app/patients", roles: ["admin", "doctor", "nurse", "receptionist", "hospital administrator"] },
   { icon: <VscReferences size={20} />, label: "Referrals", path: "/app/referrals", roles: ["admin", "doctor", "nurse", "receptionist", "hospital administrator"] },
+  { icon: <MdOutlineLocalPharmacy size={20} />, label: "Pharmacy", path: "/app/pharmacy", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "hospital administrator"] },
+  { icon: <FaHospitalSymbol size={20} /> , label: "Laboratory", path: "/app/laboratory", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
+  
 ];
 
 const collapsibleItems = [
@@ -74,7 +78,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
               to={item.path}
               end={item.path === "/app"}
               className={({ isActive }) =>
-                `flex items-center space-x-2 p-2 rounded-md transition-all duration-200 ${
+                `flex items-center space-x-2 p-2 rounded-md transition-all duration-200 hover:text-blue-800 ${
                   isActive ? "text-primary font-bold" : ""
                 }`
               }
@@ -89,7 +93,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
           <li key={key}>
             <div
               onClick={() => toggleDropdown(key)}
-              className="flex justify-between items-center p-2 cursor-pointer"
+              className="flex justify-between items-center p-2 cursor-pointer hover:text-blue-800"
             >
               <div className="flex items-center space-x-2">
                 {icon}
