@@ -18,6 +18,8 @@ import Pharmacy from "../pages/pharmacy/Pharmacy";
 import Laboratory from "../pages/Laboratory/Laboratory";
 
 import { useAuth } from "../auth/useAuth";
+import Triage from "../pages/clinical/Triage";
+import Registry from "../pages/clinical/Registry";
 
 // Role whitelist
 const roleAllowed = [
@@ -60,7 +62,7 @@ const router = createBrowserRouter(
       element: <TwoFactorAuth />,
     },
     {
-      path: "/app",
+      path: "/",
       element: (
         <AuthWrapper>
           <Home />
@@ -71,6 +73,8 @@ const router = createBrowserRouter(
         { path: "appointments", element: <Appointments /> },
         { path: "prescription", element: <Prescription /> },
         { path: "patients", element: <Patients /> },
+        { path: "triage", element: <Triage /> },
+        { path: "registry", element: <Registry /> },
         { path: "referrals", element: <Refferals /> },
         { path: "pharmacy", element: <Pharmacy /> },
         { path: "laboratory", element: <Laboratory /> },

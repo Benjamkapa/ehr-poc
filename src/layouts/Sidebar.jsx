@@ -16,15 +16,32 @@ import Patients from "../pages/patients/Patients";
 import { FaHospitalSymbol } from "react-icons/fa";
 
 const staticMenuItems = [
-  { icon: <MdDashboard size={20} />, label: "Dashboard", path: "/app", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
-  { icon: <SlCalender size={20} />, label: "Appointments", path: "/app/appointments", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
-  { icon: <BsPrescription2 size={20} />, label: "Prescription", path: "/app/prescription", roles: ["admin", "doctor", "pharmacist", "hospital administrator"] },
-  { icon: <FaHospitalUser size={20} />, label: "Patients", path: "/app/patients", roles: ["admin", "doctor", "nurse", "receptionist", "hospital administrator"] },
-  { icon: <VscReferences size={20} />, label: "Referrals", path: "/app/referrals", roles: ["admin", "doctor", "nurse", "receptionist", "hospital administrator"] },
-  { icon: <MdOutlineLocalPharmacy size={20} />, label: "Pharmacy", path: "/app/pharmacy", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "hospital administrator"] },
-  { icon: <FaHospitalSymbol size={20} /> , label: "Laboratory", path: "/app/laboratory", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
+  { icon: <MdDashboard size={20} />, label: "Dashboard", path: "/", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
+  { icon: <SlCalender size={20} />, label: "Appointments", path: "/appointments", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
+  { icon: <BsPrescription2 size={20} />, label: "Prescription", path: "/prescription", roles: ["admin", "doctor", "pharmacist", "hospital administrator"] },
+  { icon: <FaHospitalUser size={20} />, label: "Patients", path: "/patients", roles: ["admin", "doctor", "nurse", "receptionist", "hospital administrator"] },
+  { icon: <VscReferences size={20} />, label: "Referrals", path: "/referrals", roles: ["admin", "doctor", "nurse", "receptionist", "hospital administrator"] },
+  { icon: <MdOutlineLocalPharmacy size={20} />, label: "Pharmacy", path: "/pharmacy", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "hospital administrator"] },
+  { icon: <FaHospitalSymbol size={20} /> , label: "Laboratory", path: "/laboratory", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
   
 ];
+
+// const collapsibleItems = [
+//   {
+//     key: "billing",
+//     icon: <RiMoneyDollarBoxLine size={20} />,
+//     label: "Billing",
+//     roles: ["admin", "cashier", "hospital administrator"],
+//     children: ["Patients Bills", "Over the Counter", "Receipts"],
+//   },
+//   {
+//     key: "clinical",
+//     icon: <LiaStethoscopeSolid size={20} />,
+//     label: "Clinical",
+//     roles: ["admin", "doctor", "nurse", "lab technician"],
+//     children: ["Vitals", "Consultations", "Lab Orders"],
+//   },
+// ];
 
 const collapsibleItems = [
   {
@@ -32,14 +49,15 @@ const collapsibleItems = [
     icon: <RiMoneyDollarBoxLine size={20} />,
     label: "Billing",
     roles: ["admin", "cashier", "hospital administrator"],
-    children: ["Patients Bills", "Over the Counter", "Receipts"],
+    children: [{label:"Patients Bills",path:"/patients-bills"},{label:"Over the Counter",path:"/over-the-counter"},{label:"Receipts",path:"/receipts"},{label:"Payments",path:"/payments"},],
+
   },
   {
     key: "clinical",
     icon: <LiaStethoscopeSolid size={20} />,
     label: "Clinical",
     roles: ["admin", "doctor", "nurse", "lab technician"],
-    children: ["Vitals", "Consultations", "Lab Orders"],
+    children: [{label:"Registry",path:"/registry"},{label:"Triage",path:"/triage"}],
   },
 ];
 
@@ -76,7 +94,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
           <li key={idx}>
             <NavLink
               to={item.path}
-              end={item.path === "/app"}
+              end={item.path === ""}
               className={({ isActive }) =>
                 `flex items-center space-x-2 p-2 rounded-md transition-all duration-200 hover:text-blue-800 ${
                   isActive ? "text-primary font-bold" : ""
@@ -114,7 +132,9 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
             >
               {children.map((child, i) => (
                 <li key={i} className="py-1 text-gray-600 hover:text-primary cursor-pointer">
-                  {child}
+                  <NavLink to={`${child.path}`} >
+              {child.label}
+                  </NavLink>       
                 </li>
               ))}
             </ul>
