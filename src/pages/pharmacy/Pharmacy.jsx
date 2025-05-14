@@ -286,7 +286,7 @@ const Pharmacy = () => {
         <section className='mb-6'>
           <h2 className='font-semibold text-lg mb-2'>Adverse Reactions</h2>
           <textarea
-            className='border p-2 w-full'
+            className='border p-2 w-full rounded'
             rows='2'
             placeholder='Note any adverse drug reactions...'
           ></textarea>
@@ -300,7 +300,7 @@ const Pharmacy = () => {
               type='checkbox'
               checked={paymentConfirmed}
               onChange={togglePaymentConfirmation}
-              className='form-checkbox'
+              className='form-checkbox cursor-pointer'
             />
             <span>Confirm payment has been made</span>
           </label>
@@ -315,11 +315,11 @@ const Pharmacy = () => {
               value={barcodeInput}
               onChange={handleBarcodeChange}
               placeholder='Scan or enter barcode'
-              className='border p-2 flex-grow'
+              className='border p-2 flex-grow rounded'
             />
             <button
               type='submit'
-              className='bg-blue-600 text-white px-4 py-2 rounded'
+              className='bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500'
             >
               Add Dispensation
             </button>
@@ -331,7 +331,7 @@ const Pharmacy = () => {
           <h2 className='font-semibold text-lg mb-2'>KEMSA Reorder Request</h2>
           <button
             onClick={handleKEMSAReorder}
-            className='bg-green-600 text-white px-4 py-2 rounded'
+            className='bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500'
           >
             Send Reorder Request
           </button>
@@ -347,14 +347,14 @@ const Pharmacy = () => {
               type='text'
               name='drugName'
               placeholder='Drug Name'
-              className='border p-2'
+              className='border p-2 hover:shadow rounded'
               required
             />
             <input
               type='number'
               name='quantity'
               placeholder='Quantity Issued'
-              className='border p-2'
+              className='border p-2 hover:shadow rounded'
               required
               min='1'
             />
@@ -362,7 +362,7 @@ const Pharmacy = () => {
               type='text'
               name='instructions'
               placeholder='Patient Instructions'
-              className='border p-2 md:col-span-2'
+              className='border p-2 md:col-span-2 hover:shadow rounded'
             />
             <button
               type='submit'

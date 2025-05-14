@@ -33,19 +33,19 @@ const Index = () => {
     <div className="p-6 space-y-8">
       <header className="flex justify-between items-center px-10">
         <div className="flex space-x-4 font-bold w-full">
-          <div className="flex bg-blue-100 w-full text-blue-800 px-4 py-2 rounded shadow justify-between">
+          <div className="flex bg-blue-100 w-full text-blue-800 px-4 py-2 rounded shadow justify-between hover:shadow-lg">
             <FaUserDoctor size={30} />
             <span className="text-right w-full">Doctors <br />{dashboardData.doctorsCount}</span>
           </div>
-          <div className="w-full flex bg-green-100 text-green-800 px-4 py-2 rounded shadow justify-between">
+          <div className="w-full flex bg-green-100 text-green-800 px-4 py-2 rounded shadow justify-between hover:shadow-lg">
             <CiUser size={30} />
             <span className="text-right w-full">Patients<br /> {dashboardData.patientsCount}</span>
           </div>
-          <div className="w-full flex bg-gray-100 text-gray-800 px-4 py-2 rounded shadow justify-between">
+          <div className="w-full flex bg-gray-100 text-gray-800 px-4 py-2 rounded shadow justify-between hover:shadow-lg">
             <CiStethoscope size={30} />
             <span className="text-right w-full">Admitted <br />{dashboardData.admittedCount}</span>
           </div>
-          <div className="w-full flex bg-yellow-100 text-yellow-800 px-4 py-2 rounded shadow justify-between">
+          <div className="w-full flex bg-yellow-100 text-yellow-800 px-4 py-2 rounded shadow justify-between hover:shadow-lg">
             <BsHeartPulse size={30} />
             <span className="text-right w-full">Pending<br />{dashboardData.pendingCount}</span>
           </div>
@@ -128,7 +128,7 @@ const Index = () => {
             ].map((item, i) => (
               <div key={i}>
                 <span className="text-xs">{item.label}</span>
-                <div className={`bg-blue-500 h-3 rounded ${item.width}`}></div>
+                <div className={`bg-blue-500 h-3 rounded-r-full ${item.width}`}></div>
               </div>
             ))}
           </div>

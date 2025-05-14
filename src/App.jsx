@@ -6,7 +6,7 @@ import router from "./router/AppRouter";
 
 const App = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen text-xs">
       <AuthProvider>
         <div className="flex-grow">
           <RouterProvider router={router}>

@@ -51,12 +51,13 @@ const Navbar = ({ isCollapsed }) => {
         <div
           className="flex items-center space-x-4 cursor-pointer select-none"
           onClick={toggleDropdown}
-          title="User account"
+          title={'logged in as '+user.role}
         >
           <img src={profileImg} alt="Profile" className="w-12 h-12 rounded-full" />
           <div>
             <p className="text-sm font-semibold">{user ? user.email : "Guest"}</p>
-            <p className="text-sm font-semibold text-gray-600 capitalize">Logged in as {user ? user.role : ""}</p>
+            <p className="text-sm font-semibold text-gray-600 capitalize">+254709956035</p>
+            {/* <p className="text-sm font-semibold text-gray-600 capitalize">Logged in as {user ? user.role : ""}</p> */}
           </div>
         </div>
         {dropdownOpen && (

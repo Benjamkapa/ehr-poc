@@ -7,7 +7,7 @@ dotenv.config()
 
 export default defineConfig(({ mode }) => ({
   build: {
-    chunkSizeWarningLimit: 1000,//kB
+    chunkSizeWarningLimit: 15000,//kB
   },
   plugins: [react()],
   // base: '/',
