@@ -162,14 +162,12 @@ import { FaAngleRight, FaHospitalUser } from "react-icons/fa6";
 import { LiaStethoscopeSolid } from "react-icons/lia";
 import { useAuth } from "../auth/useAuth";
 import { MdDashboard, MdLocalPharmacy, MdOutlineLocalPharmacy } from "react-icons/md";
-import Patients from "../pages/patients/Patients";
 import { FaHospitalSymbol } from "react-icons/fa";
 
 const staticMenuItems = [
   { icon: <MdDashboard size={20} />, label: "Dashboard", path: "/app", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
   { icon: <SlCalender size={20} />, label: "Appointments", path: "/app/appointments", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
   { icon: <BsPrescription2 size={20} />, label: "Prescription", path: "/app/prescription", roles: ["admin", "doctor", "pharmacist", "hospital administrator"] },
-  { icon: <FaHospitalUser size={20} />, label: "Patients", path: "/app/patients", roles: ["admin", "doctor", "nurse", "receptionist", "hospital administrator"] },
   { icon: <VscReferences size={20} />, label: "Referrals", path: "/app/referrals", roles: ["admin", "doctor", "nurse", "receptionist", "hospital administrator"] },
   { icon: <MdOutlineLocalPharmacy size={20} />, label: "Pharmacy", path: "/app/pharmacy", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "hospital administrator"] },
   { icon: <FaHospitalSymbol size={20} /> , label: "Laboratory", path: "/app/laboratory", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },

@@ -9,7 +9,6 @@ import Home from "../pages/Home";
 import Index from "../pages/Dashboard/Index";
 import Appointments from "../pages/appointments/Appointments";
 import Prescription from "../pages/prescription/Prescription";
-import Patients from "../pages/patients/Patients";
 import Referrals from "../pages/referrals/Referrals";
 import Pharmacy from "../pages/pharmacy/Pharmacy";
 import Laboratory from "../pages/Laboratory/Laboratory";
@@ -86,7 +85,6 @@ const router = createBrowserRouter(
         { index: true, element: <Index /> },
         { path: "appointments", element: <Appointments /> },
         { path: "prescription", element: <Prescription /> },
-        { path: "patients", element: <Patients /> },
         { path: "triage", element: <Triage /> },
         { path: "registry", element: <Registry /> },
         { path: "referrals", element: <Referrals /> },
@@ -98,7 +96,12 @@ const router = createBrowserRouter(
       path: "*",
       element: <Navigate to="/" replace />,
     },
-  ]
+  ],
+  {
+    // basename:"/",
+    basename: import.meta.env.MODE === "development" ? "/" : "/wanene-ehr/dist/",
+  }
 );
 
 export default router;
+
