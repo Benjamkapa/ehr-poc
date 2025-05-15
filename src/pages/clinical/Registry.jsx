@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { BsXLg } from 'react-icons/bs';
 import { CiMenuKebab } from 'react-icons/ci';
+import TriageForm from '../../components/forms/TriageForm';
 
 const Registry = () => {
   const [menuOpen, setMenuOpen] = useState(null);
@@ -10,23 +11,50 @@ const Registry = () => {
   const [selectedPatient, setSelectedPatient] = useState(null);
   const menuRef = useRef(null);
 
-  const patients = [
-    { id: 1, name: 'John Doe', phone: '0712345678', dob: '1990-05-14', idNumber: '12345678', residence: 'Nairobi' },
-    { id: 2, name: 'Jane Smith', phone: '0723456789', dob: '1985-11-30', idNumber: '87654321', residence: 'Mombasa' },
-    { id: 3, name: 'Peter Mwangi', phone: '0734567890', dob: '1992-03-22', idNumber: '11223344', residence: 'Kisumu' },
-    { id: 4, name: 'Alice Kimani', phone: '0711112222', dob: '1995-07-19', idNumber: '33445566', residence: 'Thika' },
-    { id: 5, name: 'Brian Otieno', phone: '0722223333', dob: '1988-02-03', idNumber: '99887766', residence: 'Eldoret' },
-    { id: 6, name: 'Lucy Wanjiku', phone: '0733334444', dob: '1993-09-09', idNumber: '55667788', residence: 'Nyeri' },
-    { id: 7, name: 'James Kariuki', phone: '0744445555', dob: '1991-12-01', idNumber: '44332211', residence: 'Nakuru' },
-    { id: 8, name: 'Susan Chebet', phone: '0755556666', dob: '1980-01-15', idNumber: '22114433', residence: 'Kericho' },
-    { id: 9, name: 'Daniel Njoroge', phone: '0766667777', dob: '1996-06-06', idNumber: '66778899', residence: 'Machakos' },
-    { id: 10, name: 'Grace Muthoni', phone: '0777778888', dob: '1994-03-27', idNumber: '33446655', residence: 'Meru' },
-    { id: 11, name: 'Mark Otieno', phone: '0788889999', dob: '1997-10-20', idNumber: '12234455', residence: 'Kakamega' },
-    { id: 12, name: 'Emily Achieng', phone: '0799990000', dob: '1982-08-17', idNumber: '66778800', residence: 'Kisii' },
-    { id: 13, name: 'George Wekesa', phone: '0700001111', dob: '1990-11-11', idNumber: '55664477', residence: 'Bungoma' },
-    { id: 14, name: 'Faith Nduta', phone: '0710101010', dob: '1998-04-30', idNumber: '77889900', residence: 'Kitui' },
-    { id: 15, name: 'Samuel Kiprotich', phone: '0720202020', dob: '1987-12-12', idNumber: '44556677', residence: 'Narok' },
-  ];
+const [patients, setPatients] = useState([])
+const [formData, setFormData] = useState({
+  name: '',
+  phone_number: '',
+  dob: '',
+  id_number: '',
+  residence: '',
+  id_type:"",
+  sex:"",
+  occupation:"",
+  email:"",
+  kin_name:"",
+  kin_relationship:"",
+  kin_contact:""
+
+
+});
+
+
+  // Load patients from localStorage on component mount
+  useEffect(() => {
+    const storedPatients = localStorage.getItem('patients');
+    if (storedPatients) {
+      setPatients(JSON.parse(storedPatients));
+    }
+  }, []);
+
+  // const patients = [
+  //   { id: 1, name: 'John Doe', phone: '0712345678', dob: '1990-05-14', idNumber: '12345678', residence: 'Nairobi' },
+  //   { id: 2, name: 'Jane Smith', phone: '0723456789', dob: '1985-11-30', idNumber: '87654321', residence: 'Mombasa' },
+  //   { id: 3, name: 'Peter Mwangi', phone: '0734567890', dob: '1992-03-22', idNumber: '11223344', residence: 'Kisumu' },
+  //   { id: 4, name: 'Alice Kimani', phone: '0711112222', dob: '1995-07-19', idNumber: '33445566', residence: 'Thika' },
+  //   { id: 5, name: 'Brian Otieno', phone: '0722223333', dob: '1988-02-03', idNumber: '99887766', residence: 'Eldoret' },
+  //   { id: 6, name: 'Lucy Wanjiku', phone: '0733334444', dob: '1993-09-09', idNumber: '55667788', residence: 'Nyeri' },
+  //   { id: 7, name: 'James Kariuki', phone: '0744445555', dob: '1991-12-01', idNumber: '44332211', residence: 'Nakuru' },
+  //   { id: 8, name: 'Susan Chebet', phone: '0755556666', dob: '1980-01-15', idNumber: '22114433', residence: 'Kericho' },
+  //   { id: 9, name: 'Daniel Njoroge', phone: '0766667777', dob: '1996-06-06', idNumber: '66778899', residence: 'Machakos' },
+  //   { id: 10, name: 'Grace Muthoni', phone: '0777778888', dob: '1994-03-27', idNumber: '33446655', residence: 'Meru' },
+  //   { id: 11, name: 'Mark Otieno', phone: '0788889999', dob: '1997-10-20', idNumber: '12234455', residence: 'Kakamega' },
+  //   { id: 12, name: 'Emily Achieng', phone: '0799990000', dob: '1982-08-17', idNumber: '66778800', residence: 'Kisii' },
+  //   { id: 13, name: 'George Wekesa', phone: '0700001111', dob: '1990-11-11', idNumber: '55664477', residence: 'Bungoma' },
+  //   { id: 14, name: 'Faith Nduta', phone: '0710101010', dob: '1998-04-30', idNumber: '77889900', residence: 'Kitui' },
+  //   { id: 15, name: 'Samuel Kiprotich', phone: '0720202020', dob: '1987-12-12', idNumber: '44556677', residence: 'Narok' },
+  // ];
 
   const filteredPatients = patients.filter((patient) =>
     Object.values(patient)
@@ -110,12 +138,48 @@ const departments = [
   
 
 
-const handleAdd=()=>{
-    console.log("ADD PATIENT");
-}
+// const handleAdd=()=>{
+//     console.log("ADD PATIENT");
+// }
 const handleQueue=()=>{
     console.log("QUEUE PATIENT");
 }
+
+
+  // Save patients to localStorage whenever it changes
+  // useEffect(() => {
+  //   localStorage.setItem('patients', JSON.stringify(patients));
+  // }, [patients]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleAdd = (e) => {
+    e.preventDefault();
+    const newPatient = {
+      id: patients.length + 1,
+      ...formData
+    };
+    setPatients(prev => [...prev, newPatient]);
+// store patients in local storage
+    localStorage.setItem('patients', JSON.stringify([...patients, newPatient]));  
+
+
+    // setFormData({
+    //   name: '',
+    //   phone: '',
+    //   dob: '',
+    //   idNumber: '',
+    //   residence: ''
+    // });
+  };
+
+  console.log("patients is",patients)
 
 
   return (
@@ -195,7 +259,7 @@ const handleQueue=()=>{
 
       {/* Modal */}
       <dialog id="dynamic_modal" className="modal">
-        <div className={` modal-box ${modalType === 'add' ? 'w-11/12 max-w-6xl' : 'w-11/12 max-w-2xl'}`}>
+        <div className={` modal-box ${modalType === 'add' ? 'w-11/12 max-w-6xl' : 'w-11/12 max-w-4xl'}`}>
           <h3 className="font-bold text-lg mb-4">
             {modalType === 'add' && 'Add New Patient'}
             {modalType === 'queue' && `Add ${selectedPatient?.name} To Queue`}
@@ -207,16 +271,16 @@ const handleQueue=()=>{
                     {/* <div className="grid grid-cols-3 gap-3"> */}
                         <div>
                         <label className="block text-sm font-medium mb-1">Patient Name</label>
-                        <input type="text" className="border px-2 py-1 rounded w-full" />
+                        <input name='name' type="text" onChange={handleChange} className="border px-2 py-1 rounded w-full" />
                         </div>
                         <div>
                         <label className="block text-sm font-medium mb-1">Phone number</label>
-                        <input type="text" className="border px-2 py-1 rounded w-full" />
+                        <input name="phone" type="text" onChange={handleChange} className="border px-2 py-1 rounded w-full" />
                         </div>
                         <div>
                         <label className="block text-sm font-medium mb-1">Id Type</label>
 
-                        <select className='border px-2 py-1 rounded w-full' id="">
+                        <select  onChange={handleChange} name="id_type" className='border px-2 py-1 rounded w-full' id="">
                             <option >Select Id type</option>
                         {idTypes.map((type) => (
                             <option key={type.id} value={type.id}>{type.name}</option>
@@ -225,21 +289,21 @@ const handleQueue=()=>{
                         </div>
                         <div>
                         <label className="block text-sm font-medium mb-1">Id number</label>
-                        <input type="text" className="border px-2 py-1 rounded w-full" />
+                        <input  onChange={handleChange} name="id_number" type="text" className="border px-2 py-1 rounded w-full" />
                         </div>
                     {/* </div> */}
                     {/* <div className="grid grid-cols-3 gap-3"> */}
                         <div>
                         <label className="block text-sm font-medium mb-1">Residence</label>
-                        <input type="text" className="border px-2 py-1 rounded w-full" />
+                        <input onChange={handleChange} name="residence" type="text" className="border px-2 py-1 rounded w-full" />
                         </div>
                         <div>
                         <label className="block text-sm font-medium mb-1">Date Of Birth</label>
-                        <input type="date" className="border px-2 py-1 rounded w-full" />
+                        <input onChange={handleChange} name="dob" type="date" className="border px-2 py-1 rounded w-full" />
                         </div>
                         <div>
                         <label className="block text-sm font-medium mb-1">Sex </label>
-                        <select className='border px-2 py-1 rounded w-full' id="">
+                        <select onChange={handleChange} name="sex" className='border px-2 py-1 rounded w-full' id="">
                             <option>Select sex</option>
                         {sexTypes.map((type) => (
                             <option key={type.id} value={type.id}>{type.name}</option>
@@ -250,7 +314,7 @@ const handleQueue=()=>{
                     {/* <div className="grid grid-cols-3 gap-3"> */}
                     <div>
                         <label className="block text-sm font-medium mb-1">Occupation </label>
-                        <select className='border px-2 py-1 rounded w-full' id="">
+                        <select onChange={handleChange} name="occupation" className='border px-2 py-1 rounded w-full' id="">
                             <option >Select occupation</option>
                         {occupation.map((type) => (
                             // select 
@@ -260,16 +324,16 @@ const handleQueue=()=>{
                         </div>
                         <div>
                         <label className="block text-sm font-medium mb-1">Email</label>
-                        <input type="email" className="border px-2 py-1 rounded w-full" />
+                        <input onChange={handleChange} name="email" type="email" className="border px-2 py-1 rounded w-full" />
                         </div>
                         <div>
                         <label className="block text-sm font-medium mb-1">Next of Kin Name</label>
-                        <input type="text" className="border px-2 py-1 rounded w-full" />
+                        <input onChange={handleChange} name="kin_name" type="text" className="border px-2 py-1 rounded w-full" />
                         </div>            <div>
                         <label className="block text-sm font-medium mb-1">Next of Kin Relationship</label>
-                        <input type="text" className="border px-2 py-1 rounded w-full" />
+                        <input onChange={handleChange} name="kin_relationship" type="text" className="border px-2 py-1 rounded w-full" />
                         </div>            <div>
-                        <label className="block text-sm font-medium mb-1">Next of Kin Contact</label>
+                        <label onChange={handleChange} name="kin_contact" className="block text-sm font-medium mb-1">Next of Kin Contact</label>
                         <input type="number" className="border px-2 py-1 rounded w-full" />
                         </div>
     
@@ -306,6 +370,7 @@ const handleQueue=()=>{
                          </select>
                         </div>
             </form>
+                        <TriageForm/>
             </div>
           )}
 
