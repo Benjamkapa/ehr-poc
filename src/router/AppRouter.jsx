@@ -12,13 +12,22 @@ import Prescription from "../pages/prescription/Prescription";
 import Referrals from "../pages/referrals/Referrals";
 import Pharmacy from "../pages/pharmacy/Pharmacy";
 import Laboratory from "../pages/Laboratory/Laboratory";
+<<<<<<< HEAD
 import MedicalRecordTab from "../pages/treatment-plan/MedicalRecordTab";
+=======
+import Receipts from "../pages/Billing/Receipts";
+import MOHForms from "../pages/MOH Forms/MOHForms";
+
+>>>>>>> eb36469582412699ffd19f5d3e58f3e4d5ce7a70
 
 import { useAuth } from "../auth/useAuth";
 import Triage from "../pages/clinical/Triage";
 import Registry from "../pages/clinical/Registry";
 
+<<<<<<< HEAD
 import Billing from "../pages/billing/Billing";
+=======
+>>>>>>> eb36469582412699ffd19f5d3e58f3e4d5ce7a70
 
 // Role whitelist
 const roleAllowed = [
@@ -54,7 +63,7 @@ const AuthErrorBoundary = () => {
       <div className="text-center">
         <h1 className="text-2xl font-bold mb-4">Session Expired</h1>
         <p className="mb-4">Please login again to continue</p>
-        <button 
+        <button
           onClick={() => window.location.href = '/'}
           className="bg-primary text-white px-4 py-2 rounded"
         >
@@ -81,7 +90,7 @@ const router = createBrowserRouter(
         <AuthWrapper>
           <AutoLogoutHandler />
           <Home />
-        </AuthWrapper>   
+        </AuthWrapper>
       ),
       errorElement: <AuthErrorBoundary />,
       children: [
@@ -95,6 +104,8 @@ const router = createBrowserRouter(
         { path: "laboratory", element: <Laboratory /> },
         { path: "billing", element: <Billing /> },
         { path: "treatment-plan", element: <MedicalRecordTab /> },
+        { path: "receipts", element: <Receipts /> },
+        { path: "mohforms", element: <MOHForms /> },
       ],
     },
     {
