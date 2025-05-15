@@ -94,10 +94,7 @@ const collapsibleItems = [
     icon: <LiaStethoscopeSolid size={20} />,
     label: "Clinical",
     roles: ["admin", "doctor", "nurse", "lab technician"],
-    children: [
-      { label: "Registry", path: "/app/registry" },
-      { label: "Triage", path: "/app/triage" },
-    ],
+    children: [{label:"Registry",path:"/app/registry"},{label:"Triage",path:"/app/triage"}],
   },
 ];
 

@@ -75,7 +75,7 @@ const patients=[
     <p className="py-4">Click the button below to close</p>
     <div className="modal-action">
       <form method="dialog">
-        {/* if there is a button, it will close the modal */}
+        {/* if there is a button, it will close the modal */}00
         <button className="btn">Close</button>
       </form>
     </div>
