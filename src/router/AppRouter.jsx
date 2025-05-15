@@ -12,6 +12,9 @@ import Prescription from "../pages/prescription/Prescription";
 import Referrals from "../pages/referrals/Referrals";
 import Pharmacy from "../pages/pharmacy/Pharmacy";
 import Laboratory from "../pages/Laboratory/Laboratory";
+import Receipts from "../pages/Billing/Receipts";
+
+
 
 import { useAuth } from "../auth/useAuth";
 import Triage from "../pages/clinical/Triage";
@@ -51,7 +54,7 @@ const AuthErrorBoundary = () => {
       <div className="text-center">
         <h1 className="text-2xl font-bold mb-4">Session Expired</h1>
         <p className="mb-4">Please login again to continue</p>
-        <button 
+        <button
           onClick={() => window.location.href = '/'}
           className="bg-primary text-white px-4 py-2 rounded"
         >
@@ -78,7 +81,7 @@ const router = createBrowserRouter(
         <AuthWrapper>
           <AutoLogoutHandler />
           <Home />
-        </AuthWrapper>   
+        </AuthWrapper>
       ),
       errorElement: <AuthErrorBoundary />,
       children: [
@@ -90,6 +93,7 @@ const router = createBrowserRouter(
         { path: "referrals", element: <Referrals /> },
         { path: "pharmacy", element: <Pharmacy /> },
         { path: "laboratory", element: <Laboratory /> },
+        { path: "receipts", element: <Receipts /> },
       ],
     },
     {
