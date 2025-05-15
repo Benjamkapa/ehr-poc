@@ -13,12 +13,13 @@ import Referrals from "../pages/referrals/Referrals";
 import Pharmacy from "../pages/pharmacy/Pharmacy";
 import Laboratory from "../pages/Laboratory/Laboratory";
 import Receipts from "../pages/Billing/Receipts";
-
+import MOHForms from "../pages/MOH Forms/MOHForms";
 
 
 import { useAuth } from "../auth/useAuth";
 import Triage from "../pages/clinical/Triage";
 import Registry from "../pages/clinical/Registry";
+
 
 // Role whitelist
 const roleAllowed = [
@@ -94,6 +95,7 @@ const router = createBrowserRouter(
         { path: "pharmacy", element: <Pharmacy /> },
         { path: "laboratory", element: <Laboratory /> },
         { path: "receipts", element: <Receipts /> },
+        { path: "mohforms", element: <MOHForms /> },
       ],
     },
     {

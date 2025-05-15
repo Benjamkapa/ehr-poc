@@ -13,6 +13,7 @@ import { LiaStethoscopeSolid } from "react-icons/lia";
 import { useAuth } from "../auth/useAuth";
 import { MdDashboard, MdLocalPharmacy, MdOutlineLocalPharmacy } from "react-icons/md";
 import { FaHospitalSymbol } from "react-icons/fa";
+import { FaWpforms } from "react-icons/fa";
 
 const staticMenuItems = [
   { icon: <MdDashboard size={20} />, label: "Dashboard", path: "/app", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
@@ -21,6 +22,7 @@ const staticMenuItems = [
   { icon: <VscReferences size={20} />, label: "Referrals", path: "/app/referrals", roles: ["admin", "doctor", "nurse", "receptionist", "hospital administrator"] },
   { icon: <MdOutlineLocalPharmacy size={20} />, label: "Pharmacy", path: "/app/pharmacy", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "hospital administrator"] },
   { icon: <FaHospitalSymbol size={20} /> , label: "Laboratory", path: "/app/laboratory", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
+  { icon: <FaWpforms size={20} /> , label: "MOHForms", path: "/app/mohforms", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
 
 ];
 

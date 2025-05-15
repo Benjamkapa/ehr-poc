@@ -139,6 +139,5 @@ const AutoLogoutHandler = () => {
       )}
     </>
   );
-};
-
+}; */
 export default AutoLogoutHandler;
