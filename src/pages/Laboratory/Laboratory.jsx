@@ -16,6 +16,7 @@ const Laboratory = () => {
   });
 
   const [newOrder, setNewOrder] = useState('');
+  const [patientName, setPatientName] = useState('');
   const [resultEntry, setResultEntry] = useState({
     testName: '', resultValue: '', normalRange: '',
     criticalLow: '', criticalHigh: ''
@@ -34,13 +35,17 @@ const Laboratory = () => {
 
   const addTestOrder = (e) => {
     e.preventDefault();
-    if (!newOrder) return toast.error('Please select a test');
+    if (!newOrder || !patientName) return toast.error('Enter patient name and select a test');
     const order = {
-      id: Date.now(), testName: newOrder,
-      status: 'pending', orderedAt: new Date().toLocaleString()
+      id: Date.now(),
+      testName: newOrder,
+      patientName: patientName,
+      status: 'pending',
+      orderedAt: new Date().toLocaleString()
     };
     setTestOrders([...testOrders, order]);
     setNewOrder('');
+    setPatientName('');
     toast.success(`Test order for "${newOrder}" added`);
   };
 
@@ -55,9 +60,16 @@ const Laboratory = () => {
       toast.error('Please fill in test name and result value');
       return;
     }
+    // Find patientName from pending testOrders for the testName
+    const matchingOrder = testOrders.find(order =>
+      order.testName === resultEntry.testName && order.status === 'pending'
+    );
+    const patientName = matchingOrder ? matchingOrder.patientName : '';
+
     const result = {
       id: Date.now(),
       ...resultEntry,
+      patientName: patientName,
       enteredAt: new Date().toLocaleString(),
     };
     setTestResults([...testResults, result]);
@@ -126,18 +138,27 @@ const Laboratory = () => {
         {/* Order Test */}
         <section className="mb-8 border p-4 rounded shadow-lg bg-gray-100">
           <h2 className="font-semibold mb-4">Order Test</h2>
-          <form onSubmit={addTestOrder} className="flex space-x-4">
+          <form onSubmit={addTestOrder} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              type="text"
+              placeholder="Patient Name"
+              value={patientName}
+              onChange={(e) => setPatientName(e.target.value)}
+              className="border p-2 rounded"
+              required
+            />
             <select
               value={newOrder}
               onChange={(e) => setNewOrder(e.target.value)}
-              className="border p-2 rounded flex-grow"
+              className="border p-2 rounded"
+              required
             >
               <option value="">Select a test</option>
               {commonTests.map((test, idx) => (
                 <option key={idx} value={test}>{test}</option>
               ))}
             </select>
-            <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+            <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-full col-span-full w-1/2 mx-auto">
               Add Order
             </button>
           </form>
@@ -159,9 +180,10 @@ const Laboratory = () => {
               </label>
             ))}
           </div>
-          <table className="w-full border table-auto shadow-lg bg-gray-100">
+          <table className="w-full border table-auto shadow-lg bg-gray-100 text-sm">
             <thead>
-              <tr className="bg-slate-400">
+              <tr className="bg-slate-400 text-center">
+                <th className="p-2 border">Patient</th>
                 <th className="p-2 border">Test Name</th>
                 <th className="p-2 border">Status</th>
                 <th className="p-2 border">Ordered At</th>
@@ -169,10 +191,11 @@ const Laboratory = () => {
             </thead>
             <tbody>
               {filteredOrders.length === 0 ? (
-                <tr><td colSpan="3" className="text-center p-4">No orders.</td></tr>
+                <tr><td colSpan="4" className="text-center p-4">No orders.</td></tr>
               ) : (
                 filteredOrders.map(order => (
-                  <tr key={order.id}>
+                  <tr key={order.id} className="text-center">
+                    <td className="p-2 border">{order.patientName}</td>
                     <td className="p-2 border">{order.testName}</td>
                     <td className="p-2 border capitalize">{order.status}</td>
                     <td className="p-2 border">{order.orderedAt}</td>
@@ -256,6 +279,12 @@ const Laboratory = () => {
                         </td>
                         <td className="p-2 border">
                           <input
+                            name="patientName" value={editResultFormData.patientName || ''}
+                            onChange={handleEditResultChange} className="border p-1 w-full"
+                          />
+                        </td>
+                        <td className="p-2 border">
+                          <input
                             name="resultValue" value={editResultFormData.resultValue}
                             onChange={handleEditResultChange} className="border p-1 w-full"
                           />
@@ -278,6 +307,7 @@ const Laboratory = () => {
                   return (
                     <tr key={result.id} className={critical ? 'bg-red-100 font-bold' : ''}>
                       <td className="p-2 border">{result.testName}</td>
+                      <td className="p-2 border">{result.patientName}</td>
                       <td className="p-2 border">{result.resultValue}</td>
                       <td className="p-2 border">{result.normalRange}</td>
                       <td className="p-2 border">{result.enteredAt}</td>

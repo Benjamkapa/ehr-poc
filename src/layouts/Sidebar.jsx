@@ -17,6 +17,7 @@ import {
 } from "react-icons/md";
 import { FaHospitalSymbol } from "react-icons/fa";
 import { FaWpforms } from "react-icons/fa";
+import { TbReportSearch } from "react-icons/tb";
 
 const staticMenuItems = [
 
@@ -27,6 +28,7 @@ const staticMenuItems = [
   { icon: <MdOutlineLocalPharmacy size={20} />, label: "Pharmacy", path: "/app/pharmacy", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "hospital administrator"] },
   { icon: <FaHospitalSymbol size={20} /> , label: "Laboratory", path: "/app/laboratory", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
   { icon: <FaWpforms size={20} /> , label: "MOHForms", path: "/app/mohforms", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
+  { icon: <TbReportSearch size={20} /> , label: "Reports", path: "/app/reports", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
 
     {
     icon: <MdMedicalInformation   size={20} />,
