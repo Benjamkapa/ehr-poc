@@ -13,6 +13,7 @@
     "antd": "^5.25.1",
     "daisyui": "^5.0.35",
     "dotenv": "^16.5.0",
+    "lucide-react": "^0.510.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.2",

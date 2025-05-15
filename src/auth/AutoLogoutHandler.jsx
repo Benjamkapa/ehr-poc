@@ -59,50 +59,50 @@ const AutoLogoutHandler = () => {
     }, 30000);
   };
 
-  useEffect(() => {
-    if (!user) {
-      // If no user logged in, clear timer and countdown
-      if (timerId.current) {
-        clearTimeout(timerId.current);
-      }
-      if (countdownIntervalId.current) {
-        clearInterval(countdownIntervalId.current);
-      }
-      setShowCountdownModal(false);
-      setCountdown(null);
-      return;
-    }
+  // useEffect(() => {
+  //   if (!user) {
+  //     // If no user logged in, clear timer and countdown
+  //     if (timerId.current) {
+  //       clearTimeout(timerId.current);
+  //     }
+  //     if (countdownIntervalId.current) {
+  //       clearInterval(countdownIntervalId.current);
+  //     }
+  //     setShowCountdownModal(false);
+  //     setCountdown(null);
+  //     return;
+  //   }
 
-    // List of events to detect user activity
-    const events = [
-      "mousemove",
-      "keydown",
-      "click",
-      "scroll",
-      "touchstart",
-    ];
+  //   // List of events to detect user activity
+  //   const events = [
+  //     "mousemove",
+  //     "keydown",
+  //     "click",
+  //     "scroll",
+  //     "touchstart",
+  //   ];
 
-    // Reset timer on any user activity
-    events.forEach((event) => {
-      window.addEventListener(event, resetTimer);
-    });
+  //   // Reset timer on any user activity
+  //   events.forEach((event) => {
+  //     window.addEventListener(event, resetTimer);
+  //   });
 
-    // Start the timer initially
-    resetTimer();
+  //   // Start the timer initially
+  //   resetTimer();
 
-    return () => {
-      // Cleanup event listeners and timers on unmount
-      events.forEach((event) => {
-        window.removeEventListener(event, resetTimer);
-      });
-      if (timerId.current) {
-        clearTimeout(timerId.current);
-      }
-      if (countdownIntervalId.current) {
-        clearInterval(countdownIntervalId.current);
-      }
-    };
-  }, [user]);
+  //   return () => {
+  //     // Cleanup event listeners and timers on unmount
+  //     events.forEach((event) => {
+  //       window.removeEventListener(event, resetTimer);
+  //     });
+  //     if (timerId.current) {
+  //       clearTimeout(timerId.current);
+  //     }
+  //     if (countdownIntervalId.current) {
+  //       clearInterval(countdownIntervalId.current);
+  //     }
+  //   };
+  // }, [user]);
 
   return (
     <>
