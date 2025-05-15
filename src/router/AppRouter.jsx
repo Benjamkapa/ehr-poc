@@ -14,6 +14,7 @@ import Pharmacy from "../pages/pharmacy/Pharmacy";
 import Laboratory from "../pages/Laboratory/Laboratory";
 import Receipts from "../pages/Billing/Receipts";
 import MOHForms from "../pages/MOH Forms/MOHForms";
+import Reports from "../pages/Reports/Reports";
 
 
 import { useAuth } from "../auth/useAuth";
@@ -96,6 +97,7 @@ const router = createBrowserRouter(
         { path: "laboratory", element: <Laboratory /> },
         { path: "receipts", element: <Receipts /> },
         { path: "mohforms", element: <MOHForms /> },
+        { path: "reports", element: <Reports /> },
       ],
     },
     {
