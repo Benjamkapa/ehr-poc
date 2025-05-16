@@ -17,12 +17,12 @@ import Receipts from "../pages/Billing/Receipts";
 import MOHForms from "../pages/MOH Forms/MOHForms";
 import Reports from "../pages/Reports/Reports";
 
-
 import { useAuth } from "../auth/useAuth";
 import Triage from "../pages/clinical/Triage";
 import Registry from "../pages/clinical/Registry";
 
 import Billing from "../pages/billing/Billing";
+import Bedrest from "../pages/bedrest-management/Bedrest";
 
 // Role whitelist
 const roleAllowed = [
@@ -59,7 +59,7 @@ const AuthErrorBoundary = () => {
         <h1 className="text-2xl font-bold mb-4">Session Expired</h1>
         <p className="mb-4">Please login again to continue</p>
         <button
-          onClick={() => window.location.href = '/'}
+          onClick={() => (window.location.href = "/")}
           className="bg-primary text-white px-4 py-2 rounded"
         >
           Login
@@ -102,6 +102,7 @@ const router = createBrowserRouter(
         { path: "receipts", element: <Receipts /> },
         { path: "mohforms", element: <MOHForms /> },
         { path: "reports", element: <Reports /> },
+        { path: "bedrest-management", element: <Bedrest /> },
       ],
     },
     {
@@ -111,9 +112,9 @@ const router = createBrowserRouter(
   ],
   {
     // basename:"/",
-    basename: import.meta.env.MODE === "development" ? "/" : "/wanene-ehr/dist/",
+    basename:
+      import.meta.env.MODE === "development" ? "/" : "/wanene-ehr/dist/",
   }
 );
 
 export default router;
-
