@@ -26,7 +26,7 @@ const staticMenuItems = [
   { icon: <VscReferences size={20} />, label: "Referrals", path: "/app/referrals", roles: ["admin", "doctor", "nurse", "receptionist", "hospital administrator"] },
   { icon: <MdOutlineLocalPharmacy size={20} />, label: "Pharmacy", path: "/app/pharmacy", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "hospital administrator"] },
   { icon: <FaHospitalSymbol size={20} /> , label: "Laboratory", path: "/app/laboratory", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
-  { icon: <FaWpforms size={20} /> , label: "MOHForms", path: "/app/mohforms", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
+  { icon: <FaWpforms size={20} /> , label: "MOH Forms", path: "/app/mohforms", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
 
     {
     icon: <MdMedicalInformation   size={20} />,

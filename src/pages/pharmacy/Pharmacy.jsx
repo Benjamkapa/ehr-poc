@@ -127,7 +127,7 @@ const Pharmacy = () => {
         <h1 className='font-bold uppercase text-xl text-center mb-4'>Pharmacy</h1>
 
         {/* Section selector */}
-        <div className='text-center mb-5'>
+        <div className='text-center mb-5 text-sm border-b border-gray-300'>
           <nav className='inline-flex space-x-4 justify-center'>
             {['Other','Inventory', 'Prescriptions' ].map(section => (
               <button

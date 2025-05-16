@@ -258,6 +258,7 @@ const Laboratory = () => {
               <thead>
                 <tr className="bg-slate-400 text-center">
                   <th className="p-2 border">Test Name</th>
+                  <th className='p-2 border'>Patient</th>
                   <th className="p-2 border">Value</th>
                   <th className="p-2 border">Normal</th>
                   <th className="p-2 border">Entered</th>

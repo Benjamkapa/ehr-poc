@@ -72,7 +72,7 @@ const Referrals = () => {
         style={{ maxWidth: 600 }}
       >
         <Form.Item name="patientName" label="Patient Name" rules={[{ required: true }]}>
-          <Input placeholder="e.g. Khalif Kairo" />
+          <Input placeholder="e.g. Pope Leo XIV" />
         </Form.Item>
 
         <Form.Item name="referredTo" label="Referred To (Facility/Doctor)" rules={[{ required: true }]}>
