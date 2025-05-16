@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { BsPeopleFill, BsPrescription2 } from "react-icons/bs";
@@ -13,23 +12,118 @@ import {
   MdDashboard,
   MdLocalPharmacy,
   MdOutlineLocalPharmacy,
-  MdMedicalInformation 
+  MdMedicalInformation,
+  MdBed 
 } from "react-icons/md";
 import { FaHospitalSymbol } from "react-icons/fa";
 import { FaWpforms } from "react-icons/fa";
+import { TbReportSearch } from "react-icons/tb";
 
 const staticMenuItems = [
+  {
+    icon: <MdDashboard size={20} />,
+    label: "Dashboard",
+    path: "/app",
+    roles: [
+      "admin",
+      "doctor",
+      "nurse",
+      "receptionist",
+      "pharmacist",
+      "lab technician",
+      "cashier",
+      "hospital administrator",
+      "patient",
+      "triage nurse",
+    ],
+  },
+  {
+    icon: <SlCalender size={20} />,
+    label: "Appointments",
+    path: "/app/appointments",
+    roles: [
+      "admin",
+      "doctor",
+      "nurse",
+      "receptionist",
+      "pharmacist",
+      "lab technician",
+      "cashier",
+      "hospital administrator",
+      "patient",
+      "triage nurse",
+    ],
+  },
+  {
+    icon: <BsPrescription2 size={20} />,
+    label: "Prescription",
+    path: "/app/prescription",
+    roles: ["admin", "doctor", "pharmacist", "hospital administrator"],
+  },
+  {
+    icon: <VscReferences size={20} />,
+    label: "Referrals",
+    path: "/app/referrals",
+    roles: [
+      "admin",
+      "doctor",
+      "nurse",
+      "receptionist",
+      "hospital administrator",
+    ],
+  },
+  {
+    icon: <MdOutlineLocalPharmacy size={20} />,
+    label: "Pharmacy",
+    path: "/app/pharmacy",
+    roles: [
+      "admin",
+      "doctor",
+      "nurse",
+      "receptionist",
+      "pharmacist",
+      "hospital administrator",
+    ],
+  },
+  {
+    icon: <FaHospitalSymbol size={20} />,
+    label: "Laboratory",
+    path: "/app/laboratory",
+    roles: [
+      "admin",
+      "doctor",
+      "nurse",
+      "lab technician",
+      "hospital administrator",
+    ],
+  },
+  {
+    icon: <FaWpforms size={20} />,
+    label: "MOHForms",
+    path: "/app/mohforms",
+    roles: [
+      "admin",
+      "doctor",
+      "nurse",
+      "lab technician",
+      "hospital administrator",
+    ],
+  },
+  {
+    icon: <TbReportSearch size={20} />,
+    label: "Reports",
+    path: "/app/reports",
+    roles: [
+      "admin",
+      "doctor",
+      "nurse",
+      "lab technician",
+      "hospital administrator",
+    ],
+  },
 
-  { icon: <MdDashboard size={20} />, label: "Dashboard", path: "/app", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
-  { icon: <SlCalender size={20} />, label: "Appointments", path: "/app/appointments", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
-  { icon: <BsPrescription2 size={20} />, label: "Prescription", path: "/app/prescription", roles: ["admin", "doctor", "pharmacist", "hospital administrator"] },
-  { icon: <VscReferences size={20} />, label: "Referrals", path: "/app/referrals", roles: ["admin", "doctor", "nurse", "receptionist", "hospital administrator"] },
-  { icon: <MdOutlineLocalPharmacy size={20} />, label: "Pharmacy", path: "/app/pharmacy", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "hospital administrator"] },
-  { icon: <FaHospitalSymbol size={20} /> , label: "Laboratory", path: "/app/laboratory", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
-  { icon: <FaWpforms size={20} /> , label: "MOH Forms", path: "/app/mohforms", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
-
-    {
-    icon: <MdMedicalInformation   size={20} />,
+  {
+    icon: <MdMedicalInformation size={20} />,
     label: "Treatment plan",
     path: "/app/treatment-plan",
     roles: [
@@ -44,7 +138,25 @@ const staticMenuItems = [
       "patient",
       "triage nurse",
     ],
+  },
 
+    {
+    icon: <MdBed  size={20} />,
+    label: "Bedrest Management",
+    path: "/app/bedrest-management",
+    roles: [
+      "admin",
+      "doctor",
+      "nurse",
+      "receptionist",
+      "pharmacist",
+      "lab technician",
+      "cashier",
+      "hospital administrator",
+      "patient",
+      "triage nurse",
+    ],
+   
   },
 ];
 

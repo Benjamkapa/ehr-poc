@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Input, Select, Table, Space, Typography, Divider } from "antd";
 import { PrinterOutlined, PlusOutlined } from "@ant-design/icons";
+import { Card, CardHeader, CardContent } from "../../components/card";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -61,6 +62,7 @@ const Referrals = () => {
 
   return (
     <div style={{ padding: 24 }}>
+      <div className="shadow-sm p-4 bg-white rounded">
       <Title level={3}>Referrals</Title>
 
       <Divider orientation="left">New Referral</Divider>
@@ -106,6 +108,29 @@ const Referrals = () => {
         pagination={{ pageSize: 4 }}
         scroll={{ x: true }}
       />
+      <Divider orientation="left">Referral Summary</Divider>
+
+      <Card>
+        <CardHeader>
+          <Title level={4}>Referral Summary</Title>
+        </CardHeader>
+        <CardContent>
+          <p><strong>Total Referrals:</strong> {referrals.length}</p>
+          {referrals.length > 0 ? (
+            <>
+              <p><strong>Latest Referral:</strong></p>
+              <p>Patient: {referrals[referrals.length - 1].patientName}</p>
+              <p>Referred To: {referrals[referrals.length - 1].referredTo}</p>
+              <p>Reason: {referrals[referrals.length - 1].reason}</p>
+              <p>Doctor: {referrals[referrals.length - 1].doctor}</p>
+              <p>Date: {referrals[referrals.length - 1].date}</p>
+            </>
+          ) : (
+            <p>No referrals yet.</p>
+          )}
+        </CardContent>
+      </Card>
+     </div>
     </div>
   );
 };
