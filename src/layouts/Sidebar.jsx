@@ -124,7 +124,7 @@ const staticMenuItems = [
 
   {
     icon: <MdMedicalInformation size={20} />,
-    label: "Treatment plan",
+    label: "Medical Record",
     path: "/app/treatment-plan",
     roles: [
       "admin",

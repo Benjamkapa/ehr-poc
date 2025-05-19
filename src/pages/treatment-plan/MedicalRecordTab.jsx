@@ -909,9 +909,9 @@ export default function MedicalRecordApp() {
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
                   Save
                 </button>
-                {/* <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
+                <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
                   Save & Proceed to Triage
-                </button> */}
+                </button>
               </div>
             </div>
           </div>
