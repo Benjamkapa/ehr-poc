@@ -16,6 +16,7 @@ import MedicalRecordTab from "../pages/treatment-plan/MedicalRecordTab";
 import Receipts from "../pages/Billing/Receipts";
 import MOHForms from "../pages/MOH Forms/MOHForms";
 import Reports from "../pages/Reports/Reports";
+import Patient from "../pages/Patient/PatientDashboard";
 
 
 import { useAuth } from "../auth/useAuth";
@@ -102,6 +103,7 @@ const router = createBrowserRouter(
         { path: "receipts", element: <Receipts /> },
         { path: "mohforms", element: <MOHForms /> },
         { path: "reports", element: <Reports /> },
+        { path: "patient", element: <Patient /> },
       ],
     },
     {
