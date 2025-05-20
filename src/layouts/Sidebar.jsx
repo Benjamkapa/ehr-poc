@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { BsPeopleFill, BsPrescription2 } from "react-icons/bs";
@@ -13,7 +12,8 @@ import {
   MdDashboard,
   MdLocalPharmacy,
   MdOutlineLocalPharmacy,
-  MdMedicalInformation 
+  MdMedicalInformation,
+  MdBed 
 } from "react-icons/md";
 import { FaHospitalSymbol } from "react-icons/fa";
 import { FaWpforms } from "react-icons/fa";
@@ -31,13 +31,10 @@ const staticMenuItems = [
   { icon: <FaHospitalSymbol size={20} /> , label: "Laboratory", path: "/app/laboratory", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
   { icon: <FaWpforms size={20} /> , label: "MOHForms", path: "/app/mohforms", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
   { icon: <TbReportSearch size={20} /> , label: "Reports", path: "/app/reports", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
-  { icon: <FaPerson size={20} /> , label: "Patient", path: "/app/patient", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
 
-
-
-    {
-    icon: <MdMedicalInformation   size={20} />,
-    label: "Treatment plan",
+  {
+    icon: <MdMedicalInformation size={20} />,
+    label: "Medical Record",
     path: "/app/treatment-plan",
     roles: [
       "admin",
@@ -51,7 +48,25 @@ const staticMenuItems = [
       "patient",
       "triage nurse",
     ],
+  },
 
+    {
+    icon: <MdBed  size={20} />,
+    label: "Bedrest Management",
+    path: "/app/bedrest-management",
+    roles: [
+      "admin",
+      "doctor",
+      "nurse",
+      "receptionist",
+      "pharmacist",
+      "lab technician",
+      "cashier",
+      "hospital administrator",
+      "patient",
+      "triage nurse",
+    ],
+   
   },
 ];
 
