@@ -13,7 +13,7 @@ import {
   MdLocalPharmacy,
   MdOutlineLocalPharmacy,
   MdMedicalInformation,
-  MdBed 
+  MdBed
 } from "react-icons/md";
 import { FaHospitalSymbol } from "react-icons/fa";
 import { FaWpforms } from "react-icons/fa";
@@ -23,14 +23,19 @@ import { FaPerson } from "react-icons/fa6";
 
 const staticMenuItems = [
 
+
   { icon: <MdDashboard size={20} />, label: "Dashboard", path: "/app", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
   { icon: <SlCalender size={20} />, label: "Appointments", path: "/app/appointments", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
   { icon: <BsPrescription2 size={20} />, label: "Prescription", path: "/app/prescription", roles: ["admin", "doctor", "pharmacist", "hospital administrator"] },
   { icon: <VscReferences size={20} />, label: "Referrals", path: "/app/referrals", roles: ["admin", "doctor", "nurse", "receptionist", "hospital administrator"] },
   { icon: <MdOutlineLocalPharmacy size={20} />, label: "Pharmacy", path: "/app/pharmacy", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "hospital administrator"] },
-  { icon: <FaHospitalSymbol size={20} /> , label: "Laboratory", path: "/app/laboratory", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
-  { icon: <FaWpforms size={20} /> , label: "MOHForms", path: "/app/mohforms", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
-  { icon: <TbReportSearch size={20} /> , label: "Reports", path: "/app/reports", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
+  { icon: <FaHospitalSymbol size={20} />, label: "Laboratory", path: "/app/laboratory", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
+  { icon: <FaWpforms size={20} />, label: "MOHForms", path: "/app/mohforms", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
+  { icon: <TbReportSearch size={20} />, label: "Reports", path: "/app/reports", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
+  { icon: <FaPerson size={20} />, label: "Patient", path: "/app/patient", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
+
+
+
 
   {
     icon: <MdMedicalInformation size={20} />,
@@ -50,8 +55,8 @@ const staticMenuItems = [
     ],
   },
 
-    {
-    icon: <MdBed  size={20} />,
+  {
+    icon: <MdBed size={20} />,
     label: "Bedrest Management",
     path: "/app/bedrest-management",
     roles: [
@@ -66,7 +71,7 @@ const staticMenuItems = [
       "patient",
       "triage nurse",
     ],
-   
+
   },
 ];
 
@@ -136,8 +141,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                 to={item.path}
                 end={item.path === "/"}
                 className={({ isActive }) =>
-                  `flex items-center space-x-2 p-2 rounded-md transition-all duration-200 hover:text-blue-800 ${
-                    isActive ? "text-primary font-bold" : ""
+                  `flex items-center space-x-2 p-2 rounded-md transition-all duration-200 hover:text-blue-800 ${isActive ? "text-primary font-bold" : ""
                   }`
                 }
               >
@@ -161,18 +165,16 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                 </div>
                 {(!isCollapsed || isHovering) && (
                   <FaAngleRight
-                    className={`transform transition-transform ${
-                      activeDropdown === key ? "rotate-90" : ""
-                    }`}
+                    className={`transform transition-transform ${activeDropdown === key ? "rotate-90" : ""
+                      }`}
                   />
                 )}
               </div>
               <ul
-                className={`pl-10 bg-gray-100 text-sm transition-all duration-300 ease-in-out ${
-                  activeDropdown === key && (!isCollapsed || isHovering)
+                className={`pl-10 bg-gray-100 text-sm transition-all duration-300 ease-in-out ${activeDropdown === key && (!isCollapsed || isHovering)
                     ? "block"
                     : "hidden"
-                }`}
+                  }`}
               >
                 {children.map((child, i) => (
                   <li

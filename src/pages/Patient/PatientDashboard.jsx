@@ -36,12 +36,13 @@ export default function PatientDashboard() {
 
 
   const [payments, setPayments] = React.useState([
-    { date: '2025-04-01', amount: 20000, status: 'Paid' },
-    { date: '2025-03-15', amount: 7500, status: 'Paid' },
-    { date: '2024-02-28', amount: 38000, status: 'Pending' },
+    { id: 1, date: '2025-04-01', amount: 20000, status: 'Paid' },
+    { id: 2, date: '2025-03-15', amount: 7500, status: 'Paid' },
+    { id: 3, date: '2024-02-28', amount: 38000, status: 'Pending' },
   ]);
 
-  const [paymentFilter, setPaymentFilter] = React.useState('All');
+  const [paymentFilter, setPaymentFilter] = React.useState('All'); 
+  const [paymentSearch, setPaymentSearch] = React.useState('');     
 
   const [medications, setMedications] = useState([]);
   const [showMedicationForm, setShowMedicationForm] = useState(false);
@@ -295,38 +296,59 @@ export default function PatientDashboard() {
 
         {activeTab === 'Payments' && (
           <div className="payments-section">
-            <h2 className="section-title">Payment History</h2>
-
-            <div className="payments-summary">
-              <p>Total Paid: <strong>Ksh {payments.filter(p => p.status === 'Paid').reduce((sum, p) => sum + p.amount, 0).toLocaleString()}</strong></p>
-              <p>Total Pending: <strong>Ksh {payments.filter(p => p.status === 'Pending').reduce((sum, p) => sum + p.amount, 0).toLocaleString()}</strong></p>
+            <div className="payments-header">
+              <h2 className="section-title">Payment History</h2>
             </div>
 
-            <label htmlFor="filterPayments">Filter Payments:</label>
-            <select
-              id="filterPayments"
-              value={paymentFilter}
-              onChange={(e) => setPaymentFilter(e.target.value)}
-              className="filter-select"
-            >
-              <option value="All">All</option>
-              <option value="Paid">Paid</option>
-              <option value="Pending">Pending</option>
-            </select>
+            <div className="payments-controls">
+              <div className="payments-summary">
+                <p>Total Paid: <strong>Ksh {payments.filter(p => p.status === 'Paid').reduce((sum, p) => sum + p.amount, 0).toLocaleString()}</strong></p>
+                <p>Total Pending: <strong>Ksh {payments.filter(p => p.status === 'Pending').reduce((sum, p) => sum + p.amount, 0).toLocaleString()}</strong></p>
+              </div>
+
+              <div className="payments-filter-group">
+                <label htmlFor="filterPayments">Filter by Status:</label>
+                <select
+                  id="filterPayments"
+                  value={paymentFilter}
+                  onChange={(e) => setPaymentFilter(e.target.value)}
+                  className="filter-select"
+                >
+                  <option value="All">All</option>
+                  <option value="Paid">Paid</option>
+                  <option value="Pending">Pending</option>
+                </select>
+
+                <input
+                  type="text"
+                  className="payment-search"
+                  placeholder="Search by date or amount"
+                  value={paymentSearch}
+                  onChange={(e) => setPaymentSearch(e.target.value)}
+                />
+              </div>
+            </div>
 
             <ul className="payments-list">
               {payments
-                .filter(payment => paymentFilter === 'All' || payment.status === paymentFilter)
+                .filter(payment => {
+                  const matchesFilter = paymentFilter === 'All' || payment.status === paymentFilter;
+                  const matchesSearch = payment.date.includes(paymentSearch) || payment.amount.toString().includes(paymentSearch);
+                  return matchesFilter && matchesSearch;
+                })
                 .map((payment, index) => (
                   <li key={index} className={`payment-item ${payment.status.toLowerCase()}`}>
-                    <span><strong>Date:</strong> {payment.date}</span> —
-                    <span><strong>Amount:</strong> Ksh {payment.amount.toLocaleString()}</span> —
-                    <span><strong>Status:</strong> <span className={`status-badge ${payment.status.toLowerCase()}`}>{payment.status}</span></span>
+                    <div className="payment-details">
+                      <p><strong>Date:</strong> {payment.date}</p>
+                      <p><strong>Amount:</strong> Ksh {payment.amount.toLocaleString()}</p>
+                    </div>
+                    <span className={`status-badge ${payment.status.toLowerCase()}`}>{payment.status}</span>
                   </li>
                 ))}
             </ul>
           </div>
         )}
+
 
         {activeTab === 'Medications' && (
           <div className="medications-section">
@@ -343,6 +365,7 @@ export default function PatientDashboard() {
                 Medication added: {lastAdded.name} – {lastAdded.dosage} – {lastAdded.route} – {lastAdded.date} at {lastAdded.time}
               </div>
             )}
+            <br /> <br />
 
             {medications.length === 0 ? (
               <p>No drugs have been administered yet.</p>
@@ -370,7 +393,7 @@ export default function PatientDashboard() {
                 </tbody>
               </table>
             )}
-            
+
 
             {/* Modal Popup Form */}
             {showMedicationForm && (
@@ -467,7 +490,7 @@ export default function PatientDashboard() {
                     </label>
 
                     <div className="modal-buttons">
-                      <button type="submit">Add Medication</button>
+                      <button type="submit">Add Medication</button> 
                       <button
                         type="button"
                         className="cancel-medication-button"
