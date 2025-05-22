@@ -24,6 +24,7 @@ import Registry from "../pages/clinical/Registry";
 
 import Billing from "../pages/billing/Billing";
 import Bedrest from "../pages/bedrest-management/Bedrest";
+import PatientView from "../pages/clinical/PatientView";
 
 // Role whitelist
 const roleAllowed = [
@@ -95,6 +96,7 @@ const router = createBrowserRouter(
         { path: "prescription", element: <Prescription /> },
         { path: "triage", element: <Triage /> },
         { path: "registry", element: <Registry /> },
+        { path: "registry/:patientId", element: <PatientView /> },
         { path: "referrals", element: <Referrals /> },
         { path: "pharmacy", element: <Pharmacy /> },
         { path: "laboratory", element: <Laboratory /> },

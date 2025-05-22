@@ -56,7 +56,11 @@ const AutoLogoutHandler = () => {
     timerId.current = setTimeout(() => {
       startCountdown();
       // After countdown, logoutAfterTimeout will be called
+<<<<<<< HEAD
     }, 60000);
+=======
+    }, 500000);
+>>>>>>> f397b62 (General information card)
   };
 
   useEffect(() => {

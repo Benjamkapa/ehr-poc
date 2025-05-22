@@ -7,6 +7,9 @@ import { VscReferences } from "react-icons/vsc";
 import { RiMoneyDollarBoxLine } from "react-icons/ri";
 import { FaAngleRight, FaHospitalUser } from "react-icons/fa6";
 import { LiaStethoscopeSolid } from "react-icons/lia";
+import { GiArchiveRegister } from "react-icons/gi";
+
+
 import { useAuth } from "../auth/useAuth";
 import {
   MdDashboard,
@@ -22,9 +25,9 @@ import { FaPerson } from "react-icons/fa6";
 
 
 const staticMenuItems = [
-
-
   { icon: <MdDashboard size={20} />, label: "Dashboard", path: "/app", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
+  { icon: <GiArchiveRegister size={20} /> , label: "Registry", path: "/app/registry", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
+  { icon: <FaWpforms size={20} /> , label: "Triage", path: "/app/triage", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
   { icon: <SlCalender size={20} />, label: "Appointments", path: "/app/appointments", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
   { icon: <BsPrescription2 size={20} />, label: "Prescription", path: "/app/prescription", roles: ["admin", "doctor", "pharmacist", "hospital administrator"] },
   { icon: <VscReferences size={20} />, label: "Referrals", path: "/app/referrals", roles: ["admin", "doctor", "nurse", "receptionist", "hospital administrator"] },
@@ -40,6 +43,11 @@ const staticMenuItems = [
   {
     icon: <MdMedicalInformation size={20} />,
     label: "Medical Record",
+
+  },
+  {
+    icon: <MdMedicalInformation   size={20} />,
+    label: "Treatment plan",
     path: "/app/treatment-plan",
     roles: [
       "admin",
@@ -148,7 +156,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
             </li>
           ))}
 
-        {collapsibleItems
+        {/* {collapsibleItems
           .filter((item) => item.roles.includes(user?.role))
           .map(({ key, icon, label, children }) => (
             <li key={key}>
@@ -183,7 +191,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                 ))}
               </ul>
             </li>
-          ))}
+          ))} */}
       </ul>
     </div>
   );
