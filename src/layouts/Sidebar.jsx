@@ -138,8 +138,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
         onMouseLeave={() => setIsHovering(false)}
         className="flex flex-col pl-2"
       >
-        {staticMenuItems
-          .filter((item) => item.roles.includes(user?.role))
+        {staticMenuItems?.filter((item) => item?.roles?.includes(user?.role))
           .map((item, idx) => (
             <li key={idx}>
               <NavLink
