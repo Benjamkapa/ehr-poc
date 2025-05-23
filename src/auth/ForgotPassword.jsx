@@ -1,6 +1,6 @@
+import { ChevronLeft } from "lucide-react";
 import React from "react";
-import { HiOutlineLogin } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { HiOutlineMail } from "react-icons/hi";
 
 const InputField = ({ id, label, type, value, onChange }) => (
   <div className="mb-4">
@@ -18,17 +18,17 @@ const InputField = ({ id, label, type, value, onChange }) => (
   </div>
 );
 
-const Login = ({ email, password, setEmail, setPassword, handleSubmit, error }) => {
+const ForgotPassword = ({ email, setEmail, handleSubmit, error }) => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-200">
       <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded shadow-md w-full max-w-md"
       >
-        <h2 className="text-2xl mb-6 text-center font-thin">Hospital Management System</h2>
+        <h2 className="text-2xl mb-6 text-center font-thin">Forgot Password</h2>
         <p className="mb-4 text-center text-gray-600">
-          Please enter your credentials to access the the System. 
-          </p>
+          Enter your email address to receive a password reset link.
+        </p>
 
         {error && (
           <div className="mb-4 text-red-600 font-semibold text-center">
@@ -44,30 +44,22 @@ const Login = ({ email, password, setEmail, setPassword, handleSubmit, error }) 
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <InputField
-          id="password"
-          label="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
         <button
           type="submit"
-          className="justify-center mx-auto block w-full bg-primary text-white py-2 mt-12 rounded-full hover:bg-blue-800 transition duration-100"
+          className="justify-center mx-auto block w-full bg-primary text-white py-2 mt-8 rounded-full hover:bg-blue-800 transition duration-100"
         >
-          Login 
-          <HiOutlineLogin className="inline-block ml-2" />
+          Send Reset Link
+          <HiOutlineMail className="inline-block ml-2" />
         </button>
-        {/*forgot password section*/}
-        <div className="mt-4 text-right">
-          <Link to="/forgot-password" className="text-blue-500 hover:underline">
-            Forgot Password?
-          </Link>
-        </div>
+        <a
+          href="/"
+          className="text-blue-500 hover:underline mt-4 block text-right"
+        >
+          Back to Login
+        </a>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default ForgotPassword;

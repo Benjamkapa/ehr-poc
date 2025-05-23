@@ -5,6 +5,7 @@ import "../App.css";
 
 import LoginContainer from "../auth/LoginContainer";
 import TwoFactorAuth from "../auth/TwoFactorAuth";
+import ForgotPassword from "../auth/ForgotPassword";
 import Home from "../pages/Home";
 import Index from "../pages/Dashboard/Index";
 import Appointments from "../pages/appointments/Appointments";
@@ -76,6 +77,10 @@ const router = createBrowserRouter(
     {
       path: "/",
       element: <LoginContainer />,
+    },
+    {
+      path: "/forgot-password",
+      element: <ForgotPassword />,
     },
     {
       path: "/2fa",
