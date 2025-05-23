@@ -91,19 +91,19 @@ const collapsibleItems = [
     roles: ["admin", "cashier", "hospital administrator"],
     children: [
       { label: "Billing", path: "/app/billing" },
-      { label: "Patients Bills", path: "/app/patients-bills" },
-      { label: "Over the Counter", path: "/app/over-the-counter" },
+      // { label: "Patients Bills", path: "/app/patients-bills" },
+      // { label: "Over the Counter", path: "/app/over-the-counter" },
       { label: "Receipts", path: "/app/receipts" },
-      { label: "Payments", path: "/app/payments" },
+      // { label: "Payments", path: "/app/payments" },
     ],
   },
-  {
-    key: "clinical",
-    icon: <LiaStethoscopeSolid size={20} />,
-    label: "Clinical",
-    roles: ["admin", "doctor", "nurse", "lab technician"],
-    children: [{label:"Registry",path:"/app/registry"},{label:"Triage",path:"/app/triage"}],
-  },
+  // {
+  //   key: "clinical",
+  //   icon: <LiaStethoscopeSolid size={20} />,
+  //   label: "Clinical",
+  //   roles: ["admin", "doctor", "nurse", "lab technician"],
+  //   children: [{label:"Registry",path:"/app/registry"},{label:"Triage",path:"/app/triage"}],
+  // },
 ];
 
 const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
@@ -155,7 +155,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
             </li>
           ))}
 
-        {/* {collapsibleItems
+        {collapsibleItems
           .filter((item) => item.roles.includes(user?.role))
           .map(({ key, icon, label, children }) => (
             <li key={key}>
@@ -190,7 +190,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                 ))}
               </ul>
             </li>
-          ))} */}
+          ))}
       </ul>
     </div>
   );
