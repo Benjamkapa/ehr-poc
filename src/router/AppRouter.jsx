@@ -120,9 +120,8 @@ const router = createBrowserRouter(
     },
   ],
   {
-    // basename:"/",
-    basename:
-      import.meta.env.MODE === "development" ? "/" : "/wanene-ehr/dist/",
+    basename:"/",
+    // basename: import.meta.env.MODE === "development" ? "/" : "/wanene-ehr/dist/",
   }
 );
 

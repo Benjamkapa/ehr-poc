@@ -10,6 +10,6 @@ export default defineConfig(({ mode }) => ({
     chunkSizeWarningLimit: 15000,//kB
   },
   plugins: [react()],
-  // base: '/',
-  base: mode === 'development' ? '/' : '/wanene-ehr/dist/',
+  base: '/',
+  // base: mode === 'development' ? '/' : '/wanene-ehr/dist/',
 }));
