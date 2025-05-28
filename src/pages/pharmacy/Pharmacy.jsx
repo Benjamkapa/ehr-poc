@@ -5,13 +5,13 @@ import { FaBarcode } from 'react-icons/fa';
 
 const Pharmacy = () => {
   const [inventory, setInventory] = useState([
-    { drugName: 'ARVs', quantity: 90, expiryDate: '2024-12-31', reorderLevel: 100, barcodeId: 'ARV090' },
+    { drugName: 'ARVs', quantity: 90, expiryDate: '2024-12-31', reorderLevel: 180, barcodeId: 'ARV090' },
     { drugName: 'Antibiotics', quantity: 50, expiryDate: '2025-01-15', reorderLevel: 30, barcodeId: 'ANT050' },
-    { drugName: 'Pain Relievers', quantity: 120, expiryDate: '2024-11-30', reorderLevel: 80, barcodeId: 'PRL120' },
+    { drugName: 'Pain Relievers', quantity: 120, expiryDate: '2024-11-30', reorderLevel: 180, barcodeId: 'PRL120' },
     { drugName: 'Antimalarials', quantity: 75, expiryDate: '2025-02-28', reorderLevel: 50, barcodeId: 'AML075' },
     { drugName: 'Vaccines', quantity: 200, expiryDate: '2025-03-31', reorderLevel: 150, barcodeId: 'VAC200' },
     { drugName: 'Insulin', quantity: 30, expiryDate: '2024-10-15', reorderLevel: 20, barcodeId: 'INS030' },
-    { drugName: 'HIV', quantity: 40, expiryDate: '2024-09-30', reorderLevel: 25, barcodeId: 'HIV040' },
+    { drugName: 'HIV', quantity: 40, expiryDate: '2024-09-30', reorderLevel: 125, barcodeId: 'HIV040' },
     { drugName: 'HIV', quantity: 40, expiryDate: '2024-09-30', reorderLevel: 25, barcodeId: 'HIV040' },
     { drugName: 'Antidepressants', quantity: 60, expiryDate: '2025-04-15', reorderLevel: 40, barcodeId: 'ANT060' },
     { drugName: 'Antihypertensives', quantity: 80, expiryDate: '2024-12-01', reorderLevel: 60, barcodeId: 'HTN080' },
@@ -142,7 +142,7 @@ const Pharmacy = () => {
   const [currentPrescriptionPage, setCurrentPrescriptionPage] = useState(0);
   const [currentDispensationPage, setCurrentDispensationPage] = useState(0);
   const [kemsaOrderStatus, setKemsaOrderStatus] = useState({});
-  const itemsPerPage = 4;
+  const itemsPerPage = 10;
 
   // New state for adverse reactions form
   const [adrForm, setAdrForm] = useState({
@@ -245,7 +245,7 @@ const Pharmacy = () => {
       setTimeout(() => {
         setKemsaOrderStatus((prev) => ({ ...prev, [item.barcodeId]: 'success' }));
         toast.success(`KEMSA reorder successful for ${item.drugName}`);
-      }, 2000);
+      }, 3000);
     } catch (error) {
       console.error('Reorder error:', error);
       toast.error('Failed to send KEMSA reorder request');
@@ -273,7 +273,7 @@ const Pharmacy = () => {
   if (lowStockItems.length === 0) return null;
 
   return (
-    <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+    <div className="bg-yellow-50 border-t-4 border-yellow-400 p-4 mb-4">
       <div className="flex items-center">
         <div className="flex-shrink-0">
           <svg className="h-5 w-5 text-red-600" viewBox="0 0 20 20" fill="currentColor">
@@ -281,21 +281,16 @@ const Pharmacy = () => {
           </svg>
         </div>
         <div className="ml-3 flex-grow">
-          <h3 className="text-sm font-medium text-yellow-800">Low Stock Alert</h3>
+          <h3 className="text-sm font-medium text-yellow-800 text-center">Low Stock Alert, Kindly check the inventory</h3>
           <div className="mt-2 text-sm text-yellow-700">
-            <ul className="space-y-2">
+
+            {/* <ul className="space-y-2">
               {lowStockItems.map((item, index) => (
                 <li key={index} className="flex items-center justify-between">
                   <span className="flex-grow">{item.drugName} - {item.quantity} units left (Below {item.reorderLevel})</span>
-                  <button
-                    onClick={() => handleKEMSAReorder(item)}
-                    className="ml-4 px-3 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 whitespace-nowrap"
-                  >
-                    Order from KEMSA
-                  </button>
                 </li>
               ))}
-            </ul>
+            </ul> */}
           </div>
         </div>
       </div>
@@ -533,189 +528,230 @@ const Pharmacy = () => {
     );
   };
 
+  const [activeTab, setActiveTab] = useState('inventory');  
+
   return (
     <div className="p-4 text-sm">
-      <h2 className="text-xl font-bold mb-4">Pharmacy Module</h2>
+      <h2 className="text-xl font-bold mb-4 uppercase">Pharmacy</h2>
       <StockAlerts />
-
-      
-      <section className="mb-6">
-      <h3 className="font-semibold mb-2">Inventory</h3>
-      <div className="overflow-x-auto hover:shadow-lg shadow rounded-b-lg">
-        <table className="min-w-full table-auto border border-gray-300 text-xs">
-          <thead>
-            <tr className="bg-gray-400">
-              <th className="p-1 border">Drug Name</th>
-              <th className="p-1 border">Quantity</th>
-              <th className="p-1 border">Expiry Date</th>
-              <th className="p-1 border">Reorder Level</th>
-              <th className="p-1 border">Barcode</th>
-              <th className="p-1 border">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedInventory.map((item, idx) => (
-              <tr key={idx} className="text-center">
-                <td className="p-1 border">{item.drugName}</td>
-                <td className="p-1 border">{item.quantity}</td>
-                <td className="p-1 border">{item.expiryDate}</td>
-                <td className="p-1 border">{item.reorderLevel}</td>
-                <td className="p-1 border">{item.barcodeId}</td>
-                <td className="p-1 border">
-                  {item.quantity < item.reorderLevel && (
-                    <button
-                      onClick={() => handleKEMSAReorder(item)}
-                      className="text-xs px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
-                    >
-                      Reorder
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* <div className="p-4 bg-gray-50 rounded-lg"> */}
+      {/* Tab Menu */}
+      <div className="flex gap-2 mb-4 text-s">
+        <button 
+          className={`px-3 py-1 rounded ${activeTab === "inventory" ? "bg-blue-600 text-white" : "bg-gray-200"}`}
+          onClick={() => setActiveTab("inventory")}
+        >
+          Inventory
+        </button>
+        <button 
+          className={`px-3 py-1 rounded ${activeTab === "prescriptions" ? "bg-blue-600 text-white" : "bg-gray-200"}`}
+          onClick={() => setActiveTab("prescriptions")}
+        >
+          Prescriptions
+        </button>
+        <button 
+          className={`px-3 py-1 rounded ${activeTab === "history" ? "bg-blue-600 text-white" : "bg-gray-200"}`}
+          onClick={() => setActiveTab("history")}
+        >
+          Dispensation History
+        </button>
       </div>
-            <ReactPaginate
-              previousLabel={'← Prev'}
-              nextLabel={'Next →'}
-              pageCount={Math.ceil(inventory.length / itemsPerPage)}
-              onPageChange={({ selected }) => setCurrentInventoryPage(selected)}
-              containerClassName="flex justify-center space-x-2 mt-4 text-xs"
-              pageClassName="px-3 py-1 border rounded hover:bg-gray-100"
-              activeClassName="bg-blue-500"
-              previousClassName="px-3 py-1 border rounded hover:bg-gray-100"
-              nextClassName="px-3 py-1 border rounded hover:bg-gray-100"
-            />
-    </section>
+
+      {/* Inventory Section */}
+      {activeTab === "inventory" && (
+        <section className="mb-6">
+          {/* <h3 className="font-semibold mb-2">Inventory</h3> */}
+          <div className="overflow-x-auto hover:shadow-lg shadow rounded-b-lg">
+            <table className="min-w-full table-auto border border-gray-300 text-xs">
+              <thead>
+                <tr className="bg-gray-400">
+                  <th className="p-1 border">Drug Name</th>
+                  <th className="p-1 border">Quantity</th>
+                  <th className="p-1 border">Expiry Date</th>
+                  <th className="p-1 border">Reorder Level</th>
+                  <th className="p-1 border">Barcode</th>
+                  <th className="p-1 border">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedInventory.map((item, idx) => (
+                  <tr key={idx} className="text-center">
+                    <td className="p-1 border">{item.drugName}</td>
+                    <td className="p-1 border">{item.quantity}</td>
+                    <td className="p-1 border">{item.expiryDate}</td>
+                    <td className="p-1 border">{item.reorderLevel}</td>
+                    <td className="p-1 border">{item.barcodeId}</td>
+                    <td className="p-1 border">
+                      {item.quantity < item.reorderLevel && (
+                        <button
+                          onClick={() => handleKEMSAReorder(item)}
+                          className="text-xs px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+                        >
+                          Reorder
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <ReactPaginate
+            previousLabel={'← Prev'}
+            nextLabel={'Next →'}
+            pageCount={Math.ceil(inventory.length / itemsPerPage)}
+            onPageChange={({ selected }) => setCurrentInventoryPage(selected)}
+            containerClassName="flex justify-center space-x-2 mt-4 text-xs"
+            pageClassName="px-3 py-1 border rounded hover:bg-gray-100"
+            activeClassName="bg-blue-500"
+            previousClassName="px-3 py-1 border rounded hover:bg-gray-100"
+            nextClassName="px-3 py-1 border rounded hover:bg-gray-100"
+          />
+        </section>
+      )}
 
       {/* Prescriptions Section */}
-      <section className="mb-6">
-        <h3 className="font-semibold mb-2">Prescriptions</h3>
-        <div className="overflow-x-auto hover:shadow-lg shadow rounded-b-lg">
-          <table className="min-w-full table-auto border border-gray-300 text-xs">
-          <thead>
-            <tr className="bg-gray-400">
-              <th className="p-1 border">Patient</th>
-              <th className="p-1 border">Drug</th>
-              <th className="p-1 border">Dosage</th>
-              <th className="p-1 border">Duration</th>
-              <th className="p-1 border">Route</th>
-              <th className="p-1 border">Status</th>
-              <th className="p-1 border">Payment</th>
-              <th className="p-1 border">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedPrescriptions.map((prescription) => (
-              <tr key={prescription.id} className="text-center">
-                <td className="p-1 border">{prescription.patientName}</td>
-                <td className="p-1 border">{prescription.drugName}</td>
-                <td className="p-1 border">{prescription.dosage}</td>
-                <td className="p-1 border">{prescription.duration}</td>
-                <td className="p-1 border">{prescription.route}</td>
-                <td className="p-1 border">
-                  <span className={`px-2 py-1 rounded-full text-xs ${
-                    prescription.status === 'dispensed' 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-yellow-100 text-yellow-800'
-                  }`}>
-                    {prescription.status}
-                  </span>
-                </td>
-                <td className="p-1 border">
-                  <input
-                    type="checkbox"
-                    checked={prescription.paymentConfirmed}
-                    onChange={() => handlePaymentToggle(prescription.id)}
-                    disabled={prescription.status === 'dispensed'}
-                    className="h-4 w-4 text-blue-600 rounded focus:ring-blue-500"
-                  />
-                </td>
-                <td className="p-1 border">
-                  {prescription.status === 'pending' && (
-                    <button
-                      onClick={() => handleDispense(prescription)}
-                      disabled={!prescription.paymentConfirmed}
-                      className={`text-xs px-2 py-1 rounded ${
-                        prescription.paymentConfirmed
-                          ? 'bg-blue-600 text-white hover:bg-blue-700'
-                          : 'bg-gray-300 cursor-not-allowed'
-                      }`}
-                    >
-                      Dispense
-                    </button>
-                  )}
-                  {prescription.status === 'dispensed' && (
-                    <span className="text-xs text-gray-500">Completed</span>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        </div>
-        <ReactPaginate
-          previousLabel={'← Prev'}
-          nextLabel={'Next →'}
-          pageCount={Math.ceil(prescriptions.length / itemsPerPage)}
-          onPageChange={({ selected }) => setCurrentPrescriptionPage(selected)}
-          containerClassName="flex justify-center space-x-2 mt-4 text-xs"
-          pageClassName="px-3 py-1 border rounded hover:bg-gray-100"
-          activeClassName="bg-blue-500"
-          previousClassName="px-3 py-1 border rounded hover:bg-gray-100"
-          nextClassName="px-3 py-1 border rounded hover:bg-gray-100"
-        />
-      </section>
+      {activeTab === "prescriptions" && (
+        <section className="mb-6">
+          {/* <h3 className="font-semibold mb-2">Prescriptions</h3> */}
+          <div className="overflow-x-auto hover:shadow-lg shadow rounded-b-lg">
+            <table className="min-w-full table-auto border border-gray-300 text-xs">
+              <thead>
+                <tr className="bg-gray-400">
+                  <th className="p-1 border">Patient</th>
+                  <th className="p-1 border">Drug</th>
+                  <th className="p-1 border">Dosage</th>
+                  <th className="p-1 border">Duration</th>
+                  <th className="p-1 border">Route</th>
+                  <th className="p-1 border">Status</th>
+                  <th className="p-1 border">Payment</th>
+                  <th className="p-1 border">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedPrescriptions.map((prescription) => (
+                  <tr key={prescription.id} className="text-center">
+                    <td className="p-1 border">{prescription.patientName}</td>
+                    <td className="p-1 border">{prescription.drugName}</td>
+                    <td className="p-1 border">{prescription.dosage}</td>
+                    <td className="p-1 border">{prescription.duration}</td>
+                    <td className="p-1 border">{prescription.route}</td>
+                    <td className="p-1 border">
+                      <span className={`px-2 py-1 rounded-full text-xs ${
+                        prescription.status === 'dispensed' 
+                          ? 'bg-green-100 text-green-800' 
+                          : 'bg-yellow-100 text-yellow-800'
+                      }`}>
+                        {prescription.status}
+                      </span>
+                    </td>
+                    <td className="p-1 border">
+                      <input
+                        type="checkbox"
+                        checked={prescription.paymentConfirmed}
+                        onChange={() => handlePaymentToggle(prescription.id)}
+                        disabled={prescription.status === 'dispensed'}
+                        className="h-4 w-4 text-blue-600 rounded focus:ring-blue-500"
+                      />
+                    </td>
+                    <td className="p-1 border">
+                      {prescription.status === 'pending' && (
+                        <button
+                          onClick={() => handleDispense(prescription)}
+                          disabled={!prescription.paymentConfirmed}
+                          className={`text-xs px-2 py-1 rounded ${
+                            prescription.paymentConfirmed
+                              ? 'bg-blue-600 text-white hover:bg-blue-700'
+                              : 'bg-gray-300 cursor-not-allowed'
+                          }`}
+                        >
+                          Dispense
+                        </button>
+                      )}
+                      {prescription.status === 'dispensed' && (
+                        <span className="text-xs text-gray-500">Completed</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <ReactPaginate
+            previousLabel={'← Prev'}
+            nextLabel={'Next →'}
+            pageCount={Math.ceil(prescriptions.length / itemsPerPage)}
+            onPageChange={({ selected }) => setCurrentPrescriptionPage(selected)}
+            containerClassName="flex justify-center space-x-2 mt-4 text-xs"
+            pageClassName="px-3 py-1 border rounded hover:bg-gray-100"
+            activeClassName="bg-blue-500"
+            previousClassName="px-3 py-1 border rounded hover:bg-gray-100"
+            nextClassName="px-3 py-1 border rounded hover:bg-gray-100"
+          />
+        </section>
+      )}
 
       {/* Dispensation History Section */}
-      <section className="mb-6">
-        <h3 className="font-semibold mb-2">Dispensation History</h3>
-        <div className="overflow-x-auto hover:shadow-lg shadow rounded-b-lg">
-         <table className="min-w-full table-auto border border-gray-300 text-xs">
-          <thead>
-            <tr className="bg-gray-400">
-              <th className="p-1 border">Date</th>
-              <th className="p-1 border">Patient</th>
-              <th className="p-1 border">Drug</th>
-              <th className="p-1 border">Quantity</th>
-              <th className="p-1 border">Instructions</th>
-              <th className="p-1 border">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedDispensationHistory.map((record, idx) => (
-              <tr key={idx} className="text-center">
-                <td className="p-1 border">{new Date(record.dispensedAt).toLocaleDateString()}</td>
-                <td className="p-1 border">{record.patientName || 'Emily  Johnson' }</td>
-                <td className="p-1 border">{record.drugName}</td>
-                <td className="p-1 border">1</td>
-                <td className="p-1 border">{record.instructions || 'As prescribed'}</td>
-                <td className="p-1 border">
-                  <span className="px-2 py-.7 bg-green-100 text-green-800 rounded-full text-xs">
-                    Completed
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        </div>
-        {/* Pagination for Dispensation History */}
-        <ReactPaginate
-          previousLabel={'← Prev'}
-          nextLabel={'Next →'}
-          pageCount={Math.ceil(dispensationHistory.length / itemsPerPage)}
-          onPageChange={({ selected }) => setCurrentDispensationPage(selected)}
-          containerClassName="flex justify-center space-x-2 mt-4 text-xs"
-          pageClassName="px-3 py-1 border rounded hover:bg-gray-100"
-          activeClassName="bg-blue-500"
-          previousClassName="px-3 py-1 border rounded hover:bg-gray-100"
-          nextClassName="px-3 py-1 border rounded hover:bg-gray-100"
-        />
-      </section>
+      {activeTab === "history" && (
+        <section className="mb-6">
+          {/* <h3 className="font-semibold mb-2">Dispensation History</h3> */}
+          <div className="overflow-x-auto hover:shadow-lg shadow rounded-b-lg">
+            <table className="min-w-full table-auto border border-gray-300 text-xs">
+              <thead>
+                <tr className="bg-gray-400">
+                  <th className="p-1 border">Date</th>
+                  <th className="p-1 border">Patient</th>
+                  <th className="p-1 border">Drug</th>
+                  <th className="p-1 border">Quantity</th>
+                  <th className="p-1 border">Instructions</th>
+                  <th className="p-1 border">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedDispensationHistory.length === 0 ? (
+                  <tr>
+                    <td colSpan="6" className="text-center p-4 text-gray-500">
+                      No dispensation history available
+                    </td>
+                  </tr>
+                ) : (
+                  paginatedDispensationHistory.map((record) => (
+                    <tr key={record.dispensationId} className="text-center">
+                      <td className="p-1 border">{new Date(record.dispensedAt).toLocaleDateString()}</td>
+                      <td className="p-1 border">{record.patientName}</td>
+                      <td className="p-1 border">{record.drugName}</td>
+                      <td className="p-1 border">{record.quantity}</td>
+                      <td className="p-1 border">{record.instructions}</td>
+                      <td className="p-1 border">
+                        <span className={`px-2 py-1 rounded-full text-xs ${
+                          record.status === 'completed' 
+                            ? 'bg-green-100 text-green-800' 
+                            : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          {record.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+          <ReactPaginate
+            previousLabel={'← Prev'}
+            nextLabel={'Next →'}
+            pageCount={Math.ceil(dispensationHistory.length / itemsPerPage)}
+            onPageChange={({ selected }) => setCurrentDispensationPage(selected)}
+            containerClassName="flex justify-center space-x-2 mt-4 text-xs"
+            pageClassName="px-3 py-1 border rounded hover:bg-gray-100"
+            activeClassName="bg-blue-500"
+            previousClassName="px-3 py-1 border rounded hover:bg-gray-100"
+            nextClassName="px-3 py-1 border rounded hover:bg-gray-100"
+          />
+        </section>
+      )}
 
-      {/* Barcode Input */}
+      {/* Barcode Input Section - always visible */}
       <section className="mb-6 bg-white p-4 rounded-lg shadow">
         <h3 className="font-semibold mb-2 flex items-center">
           <FaBarcode className="mr-2" />
@@ -736,76 +772,8 @@ const Pharmacy = () => {
             Verify
           </button>
         </form>
-        {/* <div className="mt-2 text-xs text-gray-500">
-          Available barcodes for demo: ARV090, ANT050, PRL120, etc.
-        </div> */}
       </section>
-
-      {/* <section className="mb-6 bg-white p-4 rounded-lg shadow">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="font-semibold">Adverse Drug Reaction (ADR) Reports</h3>
-          <button
-            onClick={() => setShowAdrModal(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded text-xs hover:bg-blue-700"
-          >
-            Report New ADR
-          </button>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="min-w-full table-auto border border-gray-300 text-xs">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="p-2 border">Date Reported</th>
-                <th className="p-2 border">Patient Name</th>
-                <th className="p-2 border">Drug</th>
-                <th className="p-2 border">Reaction Type</th>
-                <th className="p-2 border">Severity</th>
-                <th className="p-2 border">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {adrSubmissions.length === 0 ? (
-                <tr>
-                  <td colSpan="6" className="text-center p-4 text-gray-500">
-                    No ADR reports submitted yet
-                  </td>
-                </tr>
-              ) : (
-                adrSubmissions.map((report) => (
-                  <tr key={report.reportId} className="hover:bg-gray-50 text-center">
-                    <td className="p-2 border">{new Date(report.reportDate).toLocaleDateString()}</td>
-                    <td className="p-2 border">{report.patientName}</td>
-                    <td className="p-2 border">{report.drugName}</td>
-                    <td className="p-2 border">{report.reactionType || 'N/A'}</td>
-                    <td className="p-2 border">
-                      <span className={`px-2 py-1 rounded-full text-xs ${
-                        report.severity === 'severe' || report.severity === 'lifeThreatening'
-                          ? 'bg-red-100 text-red-800'
-                          : report.severity === 'moderate'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : 'bg-green-100 text-green-800'
-                      }`}>
-                        {report.severity}
-                      </span>
-                    </td>
-                    <td className="p-2 border">{report.outcome || 'Pending'}</td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-
-        <AdrModal
-          isOpen={showAdrModal}
-          onChange
-          onClose={() => setShowAdrModal(false)}
-          onSubmit={handleAdrSubmit}  // Changed this line
-          formData={adrForm}
-          setFormData={setAdrForm}
-        />
-      </section> */}
+    {/* </div> */}
     </div>
   );
 };
