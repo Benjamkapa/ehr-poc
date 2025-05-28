@@ -41,8 +41,8 @@ export default function PatientDashboard() {
     { id: 3, date: '2024-02-28', amount: 38000, status: 'Pending' },
   ]);
 
-  const [paymentFilter, setPaymentFilter] = React.useState('All'); 
-  const [paymentSearch, setPaymentSearch] = React.useState('');     
+  const [paymentFilter, setPaymentFilter] = React.useState('All');
+  const [paymentSearch, setPaymentSearch] = React.useState('');
 
   const [medications, setMedications] = useState([]);
   const [showMedicationForm, setShowMedicationForm] = useState(false);
@@ -353,282 +353,84 @@ export default function PatientDashboard() {
         {activeTab === 'Medications' && (
           <div className="medications-section">
             <h2 className="section-title">Drugs Administered</h2>
-            <button
-              className="add-medication-button"
-              onClick={() => setShowMedicationForm(true)}
-            >
-              Add Administered Drug
-            </button>
 
-            {showSuccess && (
-              <div className="success-toast">
-                Medication added: {lastAdded.name} – {lastAdded.dosage} – {lastAdded.route} – {lastAdded.date} at {lastAdded.time}
-              </div>
-            )}
-            <br /> <br />
-
-            {medications.length === 0 ? (
-              <p>No drugs have been administered yet.</p>
-            ) : (
-              <table className="medications-table">
-                <thead>
-                  <tr>
-                    <th>Medication</th>
-                    <th>Dosage</th>
-                    <th>Route</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {medications.map((med, index) => (
-                    <tr key={index}>
-                      <td>{med.name}</td>
-                      <td>{med.dosage}</td>
-                      <td>{med.route}</td>
-                      <td>{med.date}</td>
-                      <td>{med.time}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-
-
-            {/* Modal Popup Form */}
-            {showMedicationForm && (
-              <div className="modal-overlay">
-                <div className="modal-content">
-                  <h3>Add Administered Drug</h3>
-                  <form
-                    className="medication-form"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      setMedications([...medications, newMedication]);
-                      setLastAdded(newMedication);
-                      setShowSuccess(true);
-                      setTimeout(() => setShowSuccess(false), 3000);
-                      setShowMedicationForm(false);
-                      setNewMedication({ name: '', dosage: '', route: '', date: '', time: '' });
-                    }}
-                  >
-                    <label>
-                      Medication Name:
-                      <select
-                        value={newMedication.name}
-                        onChange={(e) =>
-                          setNewMedication({ ...newMedication, name: e.target.value })
-                        }
-                        required
-                      >
-                        <option value="">Select Medication</option>
-                        <option value="Paracetamol">Paracetamol</option>
-                        <option value="Amoxicillin">Amoxicillin</option>
-                        <option value="Ibuprofen">Ibuprofen</option>
-                        <option value="Metformin">Metformin</option>
-                        <option value="Omeprazole">Omeprazole</option>
-                      </select>
-                    </label>
-
-                    <label>
-                      Dosage:
-                      <select
-                        value={newMedication.dosage}
-                        onChange={(e) =>
-                          setNewMedication({ ...newMedication, dosage: e.target.value })
-                        }
-                        required
-                      >
-                        <option value="">Select Dosage</option>
-                        <option value="250mg once daily">250mg once daily</option>
-                        <option value="500mg twice daily">500mg twice daily</option>
-                        <option value="100mg three times daily">100mg three times daily</option>
-                        <option value="200mg once daily">200mg once daily</option>
-                      </select>
-                    </label>
-
-                    <label>
-                      Route of Administration:
-                      <select
-                        value={newMedication.route}
-                        onChange={(e) =>
-                          setNewMedication({ ...newMedication, route: e.target.value })
-                        }
-                        required
-                      >
-                        <option value="">Select Route</option>
-                        <option value="Oral">Oral</option>
-                        <option value="Intravenous (IV)">Intravenous (IV)</option>
-                        <option value="Intramuscular (IM)">Intramuscular (IM)</option>
-                        <option value="Subcutaneous (SC)">Subcutaneous (SC)</option>
-                        <option value="Topical">Topical</option>
-                      </select>
-                    </label>
-
-                    <label>
-                      Date Administered:
-                      <input
-                        type="date"
-                        value={newMedication.date}
-                        onChange={(e) =>
-                          setNewMedication({ ...newMedication, date: e.target.value })
-                        }
-                        required
-                      />
-                    </label>
-
-                    <label>
-                      Time Administered:
-                      <input
-                        type="time"
-                        value={newMedication.time}
-                        onChange={(e) =>
-                          setNewMedication({ ...newMedication, time: e.target.value })
-                        }
-                        required
-                      />
-                    </label>
-
-                    <div className="modal-buttons">
-                      <button type="submit">Add Medication</button> 
-                      <button
-                        type="button"
-                        className="cancel-medication-button"
-                        onClick={() => setShowMedicationForm(false)}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            )}
+            <table className="medications-table">
+              <thead>
+                <tr>
+                  <th>Medication</th>
+                  <th>Dosage</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Paracetamol</td>
+                  <td>500mg twice daily</td>
+                  <td>2025-05-25</td>
+                  <td>08:00 AM</td>
+                </tr>
+                <tr>
+                  <td>Amoxicillin</td>
+                  <td>250mg once daily</td>
+                  <td>2025-05-26</td>
+                  <td>12:00 PM</td>
+                </tr>
+                <tr>
+                  <td>Ibuprofen</td>
+                  <td>200mg once daily</td>
+                  <td>2025-05-27</td>
+                  <td>7:00 PM</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         )}
 
 
-        {activeTab === 'Prescriptions' && (
-          <div className="prescriptions-section">
-            <h2 className="section-title">Prescriptions and Treatment Plans</h2>
-            <button
-              className="add-prescription-button"
-              onClick={() => setShowPrescriptionForm(true)}
-            >
-              Add Prescription
-            </button>
-            <br />
+{activeTab === 'Prescriptions' && (
+  <div className="prescriptions-section">
+    <h2 className="section-title">Prescriptions & Treatment Plans</h2>
 
-            {prescriptions.length === 0 ? (
-              <p>No prescriptions available.</p>
-            ) : (
-              <ul className="prescriptions-list">
-                {prescriptions.map((prescription, index) => (
-                  <li key={index}>
-                    <strong>{prescription.medication}</strong> — {prescription.dosage} — Duration: {prescription.duration}
-                    {prescription.notes && <p><em>Instructions:</em> {prescription.notes}</p>}
-                  </li>
-                ))}
-              </ul>
-            )}
+    <table className="prescriptions-table">
+      <thead>
+        <tr>
+          <th>Prescription</th>
+          <th>Dosage</th>
+          <th>Frequency</th>
+          <th>Duration</th>
+          <th>Plan Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ciprofloxacin</td>
+          <td>500mg</td>
+          <td>Twice Daily</td>
+          <td>7 Days</td>
+          <td>Continue for 3 more days if symptoms persist</td>
+        </tr>
+        <tr>
+          <td>Loratadine</td>
+          <td>10mg</td>
+          <td>Once Daily</td>
+          <td>5 Days</td>
+          <td>For allergic rhinitis</td>
+        </tr>
+        <tr>
+          <td>Metformin</td>
+          <td>500mg</td>
+          <td>Twice Daily</td>
+          <td>30 Days</td>
+          <td>Monitor blood sugar levels regularly</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+)}
 
-            {/* Modal Form */}
-            {showPrescriptionForm && (
-              <div className="modal-overlay">
-                <div className="modal-content">
-                  <h3>Add Prescription</h3>
-                  <form
-                    className="prescription-form"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      setPrescriptions([...prescriptions, newPrescription]);
-                      setShowPrescriptionForm(false);
-                      setNewPrescription({ medication: '', dosage: '', duration: '', notes: '' });
-                    }}
-                  >
-                    <label>
-                      Medication:
-                      <select
-                        value={newPrescription.medication}
-                        onChange={(e) =>
-                          setNewPrescription({ ...newPrescription, medication: e.target.value })
-                        }
-                        required
-                      >
-                        <option value="">Select Medication</option>
-                        <option value="Paracetamol">Paracetamol</option>
-                        <option value="Amoxicillin">Amoxicillin</option>
-                        <option value="Ibuprofen">Ibuprofen</option>
-                        <option value="Metformin">Metformin</option>
-                        <option value="Omeprazole">Omeprazole</option>
-                      </select>
-                    </label>
 
-                    <label>
-                      Dosage:
-                      <select
-                        value={newPrescription.dosage}
-                        onChange={(e) =>
-                          setNewPrescription({ ...newPrescription, dosage: e.target.value })
-                        }
-                        required
-                      >
-                        <option value="">Select Dosage</option>
-                        <option value="250mg once daily">250mg once daily</option>
-                        <option value="500mg twice daily">500mg twice daily</option>
-                        <option value="100mg three times daily">100mg three times daily</option>
-                        <option value="200mg once daily">200mg once daily</option>
-                      </select>
-                    </label>
-
-                    <label>
-                      Duration:
-                      <select
-                        value={newPrescription.duration}
-                        onChange={(e) =>
-                          setNewPrescription({ ...newPrescription, duration: e.target.value })
-                        }
-                        required
-                      >
-                        <option value="">Select Duration</option>
-                        <option value="3 days">3 days</option>
-                        <option value="5 days">5 days</option>
-                        <option value="7 days">7 days</option>
-                        <option value="10 days">10 days</option>
-                        <option value="Until review">Until review</option>
-                      </select>
-                    </label>
-
-                    <label>
-                      Instructions / Notes:
-                      <textarea
-                        value={newPrescription.notes}
-                        onChange={(e) =>
-                          setNewPrescription({ ...newPrescription, notes: e.target.value })
-                        }
-                        placeholder="e.g. Take with food or after meals"
-                        rows={3}
-                      />
-                    </label>
-
-                    <div className="prescription-form-buttons">
-                      <button type="submit" className="submit-prescription-button">Add Prescription</button>
-                      <button
-                        type="button"
-                        className="cancel-prescription-button"
-                        onClick={() => {
-                          setShowPrescriptionForm(false);
-                          setNewPrescription({ medication: '', dosage: '', duration: '', notes: '' });
-                        }}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
+        
 
 
       </div>

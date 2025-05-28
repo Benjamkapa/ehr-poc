@@ -369,323 +369,91 @@
 }
 
 
-/* Medication styling */
+/*Medication Styling */
 .medications-section {
-  margin-top: 20px;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
+  background-color: #f9f9f9;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: auto;
 }
 
-.medications-list {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.medications-list li {
-  background-color: #f4f7ff;
-  border: 1px solid #d6dbff;
-  padding: 10px;
-  margin-bottom: 8px;
-  border-radius: 6px;
-}
-
-/* Add Medication button (above form) */
-.add-medication-button {
-  background-color: #007bff;
-  border: none;
-  color: white;
-  padding: 10px 14px;
+.section-title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
   font-weight: 600;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 12px;
+  text-align: center;
 }
 
-.add-medication-button:hover {
-  background-color: #0056b3;
-}
-
-/* Medication form */
-.medication-form {
-  margin-top: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.medication-form label {
-  display: flex;
-  flex-direction: column;
-  font-weight: 600;
-}
-
-/* Dropdown and inputs styling */
-.medication-form select,
-.medication-form input {
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-}
-
-/* Buttons container at bottom of form */
-.medication-form-buttons {
-  display: flex;
-  gap: 12px;
-  margin-top: 10px;
-}
-
-/* Submit button */
-.medication-form button[type='submit'] {
-  flex: 1;
-  padding: 10px 20px;
-  background-color: #007bff;
-  border: none;
-  color: white;
-  font-weight: 600;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.medication-form button[type='submit']:hover {
-  background-color: #0056b3;
-}
-
-/* Cancel button */
-.cancel-medication-button {
-  flex: 1;
-  background-color: #dc3545;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  font-weight: 600;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.cancel-medication-button:hover {
-  background-color: #a71d2a;
-}
-
-/* Table */
 .medications-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 15px;
-  font-size: 0.95rem;
-}
-
-.medications-table th,
-.medications-table td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: left;
-}
-
-.medications-table th {
-  background-color: #f0f4ff;
-  font-weight: bold;
-}
-
-/* Success Toast */
-.success-toast {
-  margin-bottom: 10px;
-  background-color: #d4edda;
-  color: #155724;
-  padding: 10px 15px;
-  border-radius: 6px;
-  border: 1px solid #c3e6cb;
-  animation: fadeInOut 3s ease forwards;
-}
-/* Modal Styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: white;
-  padding: 25px;
+  margin-top: 1rem;
+  background-color: #fff;
   border-radius: 8px;
-  max-width: 400px;
-  width: 100%;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.modal-content h3 {
-  margin-top: 0;
-  margin-bottom: 20px;
-}
-
-.modal-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 16px;
-}
-
-/* Toast Message */
-.success-toast {
-  margin: 10px 0;
-  background-color: #d4edda;
-  color: #155724;
-  padding: 10px 15px;
-  border-radius: 6px;
-  border: 1px solid #c3e6cb;
-  animation: fadeInOut 3s ease forwards;
-}
-
-/* Table Styling (already mentioned) */
-.medications-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
+  overflow: hidden;
 }
 
 .medications-table th,
 .medications-table td {
-  border: 1px solid #ccc;
-  padding: 10px;
+  padding: 1rem;
   text-align: left;
+  border-bottom: 1px solid #eaeaea;
 }
 
 .medications-table th {
-  background-color: #f0f4ff;
+  background-color: #4F4F4F;
+  color: white;
+  font-weight: 400;
 }
+
+.medications-table tbody tr:hover {
+  background-color: #f1f5ff;
+  transition: 0.3s ease;
+}
+
 
 
 
 
 /* Prescription and treatment plans styling */
 .prescriptions-section {
-  margin-top: 20px;
+  background-color: #f9f9f9;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  margin: 2rem auto;
 }
 
-.prescriptions-list {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.prescriptions-list li {
-  background-color: #fff4e5;
-  border: 1px solid #ffd699;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-}
-
-.prescriptions-list p {
-  margin: 6px 0 0 0;
-  font-style: italic;
-  color: #6a4a00;
-}
-
-.add-prescription-button {
-  margin-bottom: 1rem;
-  background-color: #007bff;
-  border: none;
-  color: white;
-  padding: 10px 14px;
-  font-weight: 600;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.add-prescription-button:hover {
-  background-color: #0056b3;
-}
-
-.prescription-form {
-  margin-top: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.prescription-form label {
-  display: flex;
-  flex-direction: column;
-  font-weight: 600;
-}
-
-.prescription-form input,
-.prescription-form textarea {
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  resize: vertical;
-}
-
-.prescription-form button[type='submit'] {
-  width: fit-content;
-  padding: 10px 20px;
-  background-color: #007bff;
-  border: none;
-  color: white;
-  font-weight: 600;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.prescription-form button[type='submit']:hover {
-  background-color: #0056b3;
-}
-.prescription-form-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-
-.cancel-prescription-button {
-  background-color: #dc3545;
-  border: none;
-  color: white;
-  font-weight: 600;
-  border-radius: 6px;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.cancel-prescription-button:hover {
-  background-color: #a71d2a;
-}
-
-/* Modal Overlay */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
+.prescriptions-table {
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
-/* Modal Content */
-.modal-content {
-  background-color: #ffffff;
-  padding: 25px;
-  border-radius: 10px;
-  max-width: 500px;
-  width: 100%;
-  animation: fadeIn 0.3s ease;
+.prescriptions-table th,
+.prescriptions-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.prescriptions-table th {
+  background-color: #4F4F4F;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.prescriptions-table tbody tr:hover {
+  background-color: #eaffea;
+  transition: background-color 0.2s ease-in-out;
 }
 
