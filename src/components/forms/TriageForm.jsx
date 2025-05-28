@@ -1,63 +1,54 @@
+
 import { useState, useEffect } from 'react';
 import { FaExclamationTriangle, FaHeartbeat, FaThermometerHalf, FaHeartbeat as FaActivity, 
          FaArrowDown, FaArrowUp, FaClock, FaUser } from 'react-icons/fa';
 
-// Mock data for queue and triageData
-// const triageData = {
-//   id: 'P-1234',
-//   name: 'John Doe',
-//   age: 0,
-//   vitals: {
-//     systolic: 120,
-//     diastolic: 80,
-//     pulse: 75,
-//     temperature: 37.0,
-//     weight: 70,
-//     height: 175, 
-//     oxygenSaturation: 98
-//   },
-//   pain: 2,
-//   chiefComplaint: '',
-//   triageColor: 'green',
-//   queuePosition: 3
-// };
-
-const initialTriageData = {
-  id: 'P-1234',
-  name: 'John Doe',
-  age: 0,
-  vitals: {
-    systolic: 0,
-    diastolic: 0,
-    pulse: 0,
-    temperature: 0,
-    weight: 0,
-    height: 10,
-    oxygenSaturation: 0
-  },
-  pain: 0,
-  chiefComplaint: '',
-  triageColor: 'green',
-  queuePosition: 0
-};
-
-// Common complaints for autocomplete
-const commonComplaints = [
-  'Fever', 'Cough', 'Headache', 'Chest pain', 'Abdominal pain',
-  'Nausea', 'Vomiting', 'Dizziness', 'Shortness of breath', 'Back pain'
-];
-
-export default function TriageForm() {
+import toast from 'react-hot-toast';
 
 
 
-  const [triageData, setTriageData] = useState(initialTriageData);
+         
+         export default function TriageForm(props) {
+           
+           // Common complaints for autocomplete
+           const commonComplaints = [
+             'Fever', 'Cough', 'Headache', 'Chest pain', 'Abdominal pain',
+             'Nausea', 'Vomiting', 'Dizziness', 'Shortness of breath', 'Back pain'
+           ];
+
+
+
+  const [triageData, setTriageData] = useState(null);
   const [suggestions, setSuggestions] = useState([]);
   const [queueUpdateMessage, setQueueUpdateMessage] = useState('');
 
+  useEffect(() => {
+    if (props?.patientId) {
+      setTriageData({
+        id: `P-${Math.floor(1000 + Math.random() * 9000)}`,
+        user_id: props.patientId,
+        age: 0,
+        vitals: {
+          systolic: 0,
+          diastolic: 0,
+          pulse: 0,
+          temperature: 0,
+          weight: 0,
+          height: 0,
+          oxygenSaturation: 0
+        },
+        pain: 0,
+        chiefComplaint: '',
+        triageColor: 'green',
+        queuePosition: 0
+      });
+    }
+  }, [props?.patientId]);
+
   // Check vitals for abnormalities
   const checkVitalStatus = (vitalType) => {
-    const { vitals } = triageData;
+    // const { vitals } = triageData;
+    const vitals= triageData?.vitals || {};
     
     switch(vitalType) {
       case 'bp':
@@ -130,41 +121,17 @@ export default function TriageForm() {
   };
 
 
-  // Simulate real-time queue updates
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     // Randomly update queue position (for demo purposes)
-  //     const newPosition = Math.max(1, triageData.queuePosition + Math.floor(Math.random() * 3) - 1);
-      
-  //     if (newPosition !== triageData.queuePosition) {
-  //       setTriageData(prev => ({
-  //         ...prev,
-  //         queuePosition: newPosition
-  //       }));      
-  //       setQueueUpdateMessage(`Queue position updated to ${newPosition}`);
-  //       // setTimeout(() => setQueueUpdateMessage(''), 3000);
-  //     }
-  //   }, 10000);
-    
-  //   return () => clearInterval(interval);
-  // }, [triageData.queuePosition]);
-
-
-
-
-  // console.log('triageData Data:', triageData);
-
-  // const handleInternalQueue = () => {
-  //   handleQueue(triageData);
-  // }
-
 
   const handleSave = () => {
     const stored = JSON.parse(localStorage.getItem('triageData')) || [];
     const updated = [...stored, triageData];
     localStorage.setItem('triageData', JSON.stringify(updated));
     setQueueUpdateMessage('Triage data added successfully!');
-    console.log('Queued patient:', triageData);
+    toast.success('Triage data added successfully!');
+    // Clear the triage form after saving
+    setTriageData(null);
+    // Optionally, you can also clear the suggestions
+
   }
 
 
