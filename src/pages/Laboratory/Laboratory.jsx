@@ -230,12 +230,12 @@ const Laboratory = () => {
               className="border p-2 rounded"
               required
             >
-              <option value="">Select a test</option>
+              <option value="">Select test details</option>
               {testOrders
                 .filter(order => order.status === 'pending')
                 .map(order => (
                   <option key={order.id} value={order.testName}>
-                    {order.testName} - {order.patientName}
+                    {order.testName}
                   </option>
                 ))}
             </select>
