@@ -134,7 +134,7 @@ const Prescription = () => {
         <section className="mb-8">
           <div className='flex justify-between'>
           <h2 className="font-semibold mb-4 text-lg"></h2>
-          <GoPlus className='text-2xl text-blue-500 mb-4 cursor-pointer hover:text-green-600' title='Add Prescription' onClick={() => setShowModal(true)} />
+          <GoPlus className='hover:bg-blue-500 hover:text-white hover:rounded text-2xl text-blue-500 mb-4 cursor-pointer' title='Add Prescription' onClick={() => setShowModal(true)} />
           </div>
           <table className="w-full border table-auto shadow-lg bg-gray-100">
             <thead>

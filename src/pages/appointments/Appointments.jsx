@@ -109,7 +109,7 @@ const Appointments = () => {
 
           <div className='flex justify-between'>
             <h2 className='font-semibold text-lg mb-2'></h2>
-            <GoPlus className='text-2xl text-blue-500 mb-4 cursor-pointer hover:text-green-600' title='Add Appointment' onClick={() => setShowModal(true)} />
+            <GoPlus className='hover:bg-blue-500 hover:text-white text-2xl text-blue-500 mb-4 cursor-pointer hover:rounded' title='Add Appointment' onClick={() => setShowModal(true)} />
           </div>
           <table className='w-full border table-auto bg-gray-100 shadow-lg'>
             <thead>
