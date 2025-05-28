@@ -1,25 +1,32 @@
-import { Delete, DeleteIcon, EditIcon } from 'lucide-react';
+import { DeleteIcon } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
-import { BiEdit, BiEditAlt, BiSolidSave } from 'react-icons/bi';
+import { BiEdit, BiSolidSave } from 'react-icons/bi';
 import { FcCancel } from 'react-icons/fc';
 import { GoPlus } from 'react-icons/go';
 
 const Prescription = () => {
   const [prescriptions, setPrescriptions] = useState([]);
+  const [appointments, setAppointments] = useState([]);
   const [newPrescription, setNewPrescription] = useState({
     patientName: '', medication: '', dosage: '', instructions: ''
   });
   const [editIndex, setEditIndex] = useState(null);
   const [editData, setEditData] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [modalPrescriptions, setModalPrescriptions] = useState([]);
+  const [modalPatientName, setModalPatientName] = useState('');
 
+  // Load data on mount
   useEffect(() => {
-    const stored = JSON.parse(sessionStorage.getItem("prescriptions") || "[]");
-    setPrescriptions(stored);
+    const storedPrescriptions = JSON.parse(localStorage.getItem("prescriptions") || "[]");
+    const storedAppointments = JSON.parse(localStorage.getItem("appointments") || "[]");
+    setPrescriptions(storedPrescriptions);
+    setAppointments(storedAppointments);
   }, []);
 
   const saveToStorage = (data) => {
-    sessionStorage.setItem("prescriptions", JSON.stringify(data));
+    localStorage.setItem("prescriptions", JSON.stringify(data));
   };
 
   const addPrescription = (e) => {
@@ -74,7 +81,13 @@ const Prescription = () => {
     setEditData({});
   };
 
-  const [showModal, setShowModal] = useState(false);
+  const handleViewPrescriptions = (patientName) => {
+    const allPrescriptions = JSON.parse(localStorage.getItem("prescriptions") || "[]");
+    const filtered = allPrescriptions.filter(p => p.patientName === patientName);
+    setModalPrescriptions(filtered);
+    setModalPatientName(patientName);
+    setShowModal(true);
+  };
 
   return (
     <div className="grid grid-cols-1 mx-10 gap-6">
@@ -83,135 +96,72 @@ const Prescription = () => {
       <div className="col-span-2 px-10">
         <h1 className="text-xl font-bold mb-6 text-center uppercase">Prescription</h1>
 
-      {/*Setting up modal for additng prescription*/}
-      {showModal && ( 
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl relative">
-            <button 
-            onClick={() => setShowModal(false)}
-            className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl"
-            >
-              &times;
-            </button>
-            <h2 className="font-semibold mb-4 text-lg">Create New Prescription</h2>
-          <form onSubmit={addPrescription} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text" name="patientName" placeholder="Patient Name"
-              value={newPrescription.patientName}
-              onChange={(e) => setNewPrescription({ ...newPrescription, patientName: e.target.value })}
-              className="border p-2 rounded hover:shadow"
-              required
-            />
-            <input
-              type="text" name="medication" placeholder="Medication"
-              value={newPrescription.medication}
-              onChange={(e) => setNewPrescription({ ...newPrescription, medication: e.target.value })}
-              className="border p-2 rounded hover:shadow"
-              required
-            />
-            <input
-              type="text" name="dosage" placeholder="Dosage"
-              value={newPrescription.dosage}
-              onChange={(e) => setNewPrescription({ ...newPrescription, dosage: e.target.value })}
-              className="border p-2 rounded hover:shadow"
-            />
-            <input
-              type="text" name="instructions" placeholder="Instructions"
-              value={newPrescription.instructions}
-              onChange={(e) => setNewPrescription({ ...newPrescription, instructions: e.target.value })}
-              className="border p-2 rounded hover:shadow"
-            />
-            <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-full col-span-full mx-auto w-1/2 hover:bg-blue-500">
-              Add Prescription
-            </button>
-          </form> 
-          </div> 
-          </div> 
-      )}
-
-
-        {/* Prescription Table */}
         <section className="mb-8">
-          <div className='flex justify-between'>
-          <h2 className="font-semibold mb-4 text-lg"></h2>
-          <GoPlus className='hover:bg-blue-500 hover:text-white hover:rounded text-2xl text-blue-500 mb-4 cursor-pointer' title='Add Prescription' onClick={() => setShowModal(true)} />
-          </div>
           <table className="w-full border table-auto shadow-lg bg-gray-100">
             <thead>
               <tr className="bg-slate-400">
                 <th className="p-2 border">Patient Name</th>
-                <th className="p-2 border">Medication</th>
-                <th className="p-2 border">Dosage</th>
-                <th className="p-2 border">Instructions</th>
+                <th className="p-2 border">Doctor</th>
+                <th className="p-2 border">Date</th>
+                <th className="p-2 border">Reason</th>
                 <th className="p-2 border">Actions</th>
               </tr>
             </thead>
-            <tbody>
-              {prescriptions.length === 0 ? (
+            <tbody className="text-center">
+              {appointments.length === 0 ? (
                 <tr><td colSpan="5" className="text-center p-4">No prescriptions.</td></tr>
               ) : (
-
-                prescriptions.map((pres, index) => (
-                  <tr key={pres.id} className={`${index % 2 === 0 ? 'bg-gray-100 text-center' : 'bg-white text-center'}`}>
-                    {editIndex === index ? (
-                      <>
-                        <td className="p-2 border">
-                          <input
-                            name="patientName"
-                            value={editData.patientName}
-                            onChange={handleEditChange}
-                            className="border p-1 w-full"
-                          />
-                        </td>
-                        <td className="p-2 border">
-                          <input
-                            name="medication"
-                            value={editData.medication}
-                            onChange={handleEditChange}
-                            className="border p-1 w-full"
-                          />
-                        </td>
-                        <td className="p-2 border">
-                          <input
-                            name="dosage"
-                            value={editData.dosage}
-                            onChange={handleEditChange}
-                            className="border p-1 w-full"
-                          />
-                        </td>
-                        <td className="p-2 border">
-                          <input
-                            name="instructions"
-                            value={editData.instructions}
-                            onChange={handleEditChange}
-                            className="border p-1 w-full"
-                          />
-                        </td>
-                        <td className="p-2 border flex">
-                          <button onClick={saveEdit} title='Update' className="hover:text-green-600 px-2 py-1 rounded mr-2">
-                            <BiSolidSave size={15} />
-                          </button>
-                          <button onClick={cancelEdit} title='Cancel' className="text-white px-2 py-1 rounded"><FcCancel size={15}/></button>
-                        </td>
-                      </>
-                    ) : (
-                      <>
-                        <td className="p-2 border">{pres.patientName}</td>
-                        <td className="p-2 border">{pres.medication}</td>
-                        <td className="p-2 border">{pres.dosage}</td>
-                        <td className="p-2 border">{pres.instructions}</td>
-                        <td className="p-2 border">
-                          <button onClick={() => startEdit(index)} title='Edit' className="hover:text-blue-600 px-2 py-1 rounded mr-2"><BiEdit  size={15} /></button>
-                          <button onClick={() => deletePrescription(pres.id)} className="px-2 py-1 rounded hover:text-red-500" title='delete'><DeleteIcon size={15}/></button>
-                        </td>
-                      </>
-                    )}
+                appointments.map((app, index) => (
+                  <tr key={index} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
+                    <td className="p-2 border">{app.patientName}</td>
+                    <td className="p-2 border">{app.doctor}</td>
+                    <td className="p-2 border">{app.appointmentDate}</td>
+                    <td className="p-2 border">{app.reason}</td>
+                    <td className="p-2 border">
+                      <button
+                        onClick={() => handleViewPrescriptions(app.patientName)}
+                        className="bg-blue-600 text-white px-4 py-1 rounded"
+                      >
+                        Details
+                      </button>
+                    </td>
                   </tr>
                 ))
               )}
             </tbody>
           </table>
         </section>
+
+        {/* Modal for showing prescription details */}
+        {showModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-lg relative">
+              <button
+                onClick={() => setShowModal(false)}
+                className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl"
+              >
+                &times;
+              </button>
+              <h2 className="font-semibold mb-4 text-lg text-center">
+                Detailed Prescription for {modalPatientName}
+              </h2>
+
+              <div className="bg-gray-100 p-4 rounded shadow-inner">
+                {modalPrescriptions.length === 0 ? (
+                  <p className="text-center text-gray-600">No prescriptions available for this patient.</p>
+                ) : (
+                  <ul className="list-disc pl-6 space-y-2 text-gray-700">
+                    {modalPrescriptions.map(p => (
+                      <li key={p.id}>
+                        <strong>Medication:</strong> {p.medication}, <strong>Dosage:</strong> {p.dosage}, <strong>Instructions:</strong> {p.instructions}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

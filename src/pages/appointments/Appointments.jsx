@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { BsTrash3, BsPencilSquare } from 'react-icons/bs';
 import { toast, Toaster } from 'react-hot-toast';
 import { GoPlus } from 'react-icons/go';
 import { SaveIcon } from 'lucide-react';
@@ -13,12 +12,20 @@ const Appointments = () => {
     doctor: '',
     appointmentDate: '',
     reason: '',
+    status: 'appointed',
   });
+  const [showModal, setShowModal] = useState(false);
 
+  // Load full appointments on mount
   useEffect(() => {
-    const storedData = JSON.parse(sessionStorage.getItem("appointments") || "[]");
+    const storedData = JSON.parse(localStorage.getItem("appointments") || "[]");
     setAppointments(storedData);
   }, []);
+
+  // Whenever appointments change, update localStorage
+  useEffect(() => {
+    localStorage.setItem("appointments", JSON.stringify(appointments));
+  }, [appointments]);
 
   const handleAppointmentSubmit = (e) => {
     e.preventDefault();
@@ -28,10 +35,10 @@ const Appointments = () => {
       doctor: form.doctor.value,
       appointmentDate: form.appointmentDate.value,
       reason: form.reason.value,
+      status: form.status.value,
     };
 
     const updatedData = [...appointments, newEntry];
-    sessionStorage.setItem("appointments", JSON.stringify(updatedData));
     setAppointments(updatedData);
     form.reset();
     toast.success('Appointment added successfully!');
@@ -40,7 +47,6 @@ const Appointments = () => {
 
   const deleteAppointment = (index) => {
     const updatedData = appointments.filter((_, i) => i !== index);
-    sessionStorage.setItem("appointments", JSON.stringify(updatedData));
     setAppointments(updatedData);
     if (editAppointmentIndex === index) {
       setEditAppointmentIndex(null);
@@ -61,7 +67,6 @@ const Appointments = () => {
   const saveEditedAppointment = () => {
     const updated = [...appointments];
     updated[editAppointmentIndex] = editAppointmentFormData;
-    sessionStorage.setItem("appointments", JSON.stringify(updated));
     setAppointments(updated);
     setEditAppointmentIndex(null);
     toast.success('Appointment updated successfully!');
@@ -71,45 +76,50 @@ const Appointments = () => {
     setEditAppointmentIndex(null);
   };
 
-  const [showModal , setShowModal] = useState(false);
-
   return (
     <div className='grid grid-cols-1 gap-6 mx-10'>
       <div className='col-span-2'>
         <h1 className='font-bold uppercase text-xl text-center mb-4'>Appointments</h1>
 
-          {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl relative">
-            <button
-              onClick={() => setShowModal(false)}
-              className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl"
-            >
-              &times;
-            </button>
-            <h2 className='font-semibold text-lg mb-4'>Add Appointment</h2>
-            <form onSubmit={handleAppointmentSubmit} className='grid grid-cols-1 md:grid-cols-2 gap-3'>
-              <input name='patientName' placeholder='Patient Name' className='rounded border p-2' required />
-              <input name='doctor' placeholder='Doctor' className='border p-2 rounded' required />
-              <input type='date' name='appointmentDate' className='border rounded p-2' required />
-              <input name='reason' placeholder='Reason for Visit' className='rounded border p-2 md:col-span-2' />
+        {showModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl relative">
               <button
-                type='submit'
-                className='bg-blue-600 mx-auto text-white px-4 w-1/2 rounded-full py-2 hover:bg-blue-500 col-span-full'
+                onClick={() => setShowModal(false)}
+                className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl"
               >
-                Save Appointment
+                &times;
               </button>
-            </form>
+              <h2 className='font-semibold text-lg mb-4'>Add Appointment</h2>
+              <form onSubmit={handleAppointmentSubmit} className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+                <input name='patientName' placeholder='Patient Name' className='rounded border p-2' required />
+                <input name='doctor' placeholder='Doctor' className='border p-2 rounded' required />
+                <input type='date' name='appointmentDate' className='border rounded p-2' required />
+                <input name='reason' placeholder='Reason for Visit' className='rounded border p-2' />
+                <select name='status' className='border rounded p-2' defaultValue='pending' required>
+                  <option value='appointed'>Appointed</option>
+                  <option value='cancelled'>Cancelled</option>
+                  <option value='pending'>Pending</option>
+                </select>
+                <button
+                  type='submit'
+                  className='bg-blue-600 mx-auto text-white px-4 w-1/2 rounded-full py-2 hover:bg-blue-500 col-span-full'
+                >
+                  Save Appointment
+                </button>
+              </form>
+            </div>
           </div>
-        </div>
-      )}
-
+        )}
 
         <section className='mx-5 px-5'>
-
           <div className='flex justify-between'>
             <h2 className='font-semibold text-lg mb-2'></h2>
-            <GoPlus className='hover:bg-blue-500 hover:text-white text-2xl text-blue-500 mb-4 cursor-pointer hover:rounded' title='Add Appointment' onClick={() => setShowModal(true)} />
+            <GoPlus
+              className='hover:bg-blue-500 hover:text-white text-2xl text-blue-500 mb-4 cursor-pointer hover:rounded'
+              title='Add Appointment'
+              onClick={() => setShowModal(true)}
+            />
           </div>
           <table className='w-full border table-auto bg-gray-100 shadow-lg'>
             <thead>
@@ -118,13 +128,14 @@ const Appointments = () => {
                 <th className='p-2 border'>Doctor</th>
                 <th className='p-2 border'>Date</th>
                 <th className='p-2 border'>Reason</th>
+                <th className='p-2 border'>Status</th>
                 <th className='p-2 border'>Actions</th>
               </tr>
             </thead>
             <tbody className='text-center'>
               {appointments.length === 0 ? (
                 <tr>
-                  <td colSpan='5' className='text-center p-4'>No appointments added.</td>
+                  <td colSpan='6' className='text-center p-4'>No appointments added.</td>
                 </tr>
               ) : (
                 appointments.map((appointment, index) => (
@@ -167,9 +178,21 @@ const Appointments = () => {
                             className='border p-1 w-full'
                           />
                         </td>
+                        <td className='p-2 border'>
+                          <select
+                            name='status'
+                            value={editAppointmentFormData.status}
+                            onChange={handleEditAppointmentChange}
+                            className='border p-1 w-full'
+                          >
+                            <option value='appointed'>Appointed</option>
+                            <option value='cancelled'>Cancelled</option>
+                            <option value='pending'>Pending</option>
+                          </select>
+                        </td>
                         <td className='p-2 border flex-row'>
-                          <button onClick={saveEditedAppointment} className='bg-green-600 text-white p-1 rounded'><SaveIcon size={12}/></button>
-                          <button onClick={cancelEditAppointment} className='bg-red-600 text-white p-1 rounded ml-2'><TiCancel/></button>
+                          <button onClick={saveEditedAppointment} title='save' className='bg-green-600 text-white p-1 rounded'><SaveIcon size={12} /></button>
+                          <button onClick={cancelEditAppointment} title='cancel' className='bg-red-600 text-white p-1 rounded ml-2'><TiCancel /></button>
                         </td>
                       </>
                     ) : (
@@ -178,12 +201,10 @@ const Appointments = () => {
                         <td className='p-2 border'>{appointment.doctor}</td>
                         <td className='p-2 border'>{appointment.appointmentDate}</td>
                         <td className='p-2 border'>{appointment.reason}</td>
+                        <td className='p-2 border'>{appointment.status}</td>
                         <td className='p-2 border'>
-                          <button onClick={() => editAppointment(index)} className='bg-green-600 text-white p-1 rounded'>
-                            <BsPencilSquare />
-                          </button>
-                          <button onClick={() => deleteAppointment(index)} className='bg-red-600 text-white p-1 rounded ml-2'>
-                            <BsTrash3 />
+                          <button onClick={() => editAppointment(index)} className='bg-blue-600 text-white px-4 rounded'>
+                            Act
                           </button>
                         </td>
                       </>
