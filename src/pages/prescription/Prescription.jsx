@@ -1,5 +1,9 @@
+import { Delete, DeleteIcon, EditIcon } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
+import { BiEdit, BiEditAlt, BiSolidSave } from 'react-icons/bi';
+import { FcCancel } from 'react-icons/fc';
+import { GoPlus } from 'react-icons/go';
 
 const Prescription = () => {
   const [prescriptions, setPrescriptions] = useState([]);
@@ -69,16 +73,26 @@ const Prescription = () => {
     setEditData({});
   };
 
+  const [showModal, setShowModal] = useState(false);
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 mx-10 gap-6">
       <Toaster />
 
       <div className="col-span-2 px-10">
-        <h1 className="text-2xl font-bold mb-6 text-center uppercase">Prescription</h1>
+        <h1 className="text-xl font-bold mb-6 text-center uppercase">Prescription</h1>
 
-        {/* Add Form */}
-        <section className="mb-8 border p-4 rounded shadow-lg bg-gray-100">
-          <h2 className="font-semibold mb-4 text-lg">Create New Prescription</h2>
+      {/*Setting up modal for additng prescription*/}
+      {showModal && ( 
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl relative">
+            <button 
+            onClick={() => setShowModal(false)}
+            className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl"
+            >
+              &times;
+            </button>
+            <h2 className="font-semibold mb-4 text-lg">Create New Prescription</h2>
           <form onSubmit={addPrescription} className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input
               type="text" name="patientName" placeholder="Patient Name"
@@ -109,12 +123,18 @@ const Prescription = () => {
             <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-full col-span-full mx-auto w-1/2 hover:bg-blue-500">
               Add Prescription
             </button>
-          </form>
-        </section>
+          </form> 
+          </div> 
+          </div> 
+      )}
+
 
         {/* Prescription Table */}
         <section className="mb-8">
-          <h2 className="font-semibold mb-4 text-lg">Prescriptions</h2>
+          <div className='flex justify-between'>
+          <h2 className="font-semibold mb-4 text-lg"></h2>
+          <GoPlus className='text-2xl text-blue-500 mb-4 cursor-pointer hover:text-green-600' title='Add Prescription' onClick={() => setShowModal(true)} />
+          </div>
           <table className="w-full border table-auto shadow-lg bg-gray-100">
             <thead>
               <tr className="bg-slate-400">
@@ -131,7 +151,7 @@ const Prescription = () => {
               ) : (
 
                 prescriptions.map((pres, index) => (
-                  <tr key={pres.id} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
+                  <tr key={pres.id} className={`${index % 2 === 0 ? 'bg-gray-100 text-center' : 'bg-white text-center'}`}>
                     {editIndex === index ? (
                       <>
                         <td className="p-2 border">
@@ -166,9 +186,11 @@ const Prescription = () => {
                             className="border p-1 w-full"
                           />
                         </td>
-                        <td className="p-2 border">
-                          <button onClick={saveEdit} className="bg-green-600 text-white px-2 py-1 rounded mr-2">Save</button>
-                          <button onClick={cancelEdit} className="bg-gray-500 text-white px-2 py-1 rounded">Cancel</button>
+                        <td className="p-2 border flex">
+                          <button onClick={saveEdit} title='Update' className="hover:text-green-600 px-2 py-1 rounded mr-2">
+                            <BiSolidSave size={15} />
+                          </button>
+                          <button onClick={cancelEdit} title='Cancel' className="text-white px-2 py-1 rounded"><FcCancel size={15}/></button>
                         </td>
                       </>
                     ) : (
@@ -178,8 +200,8 @@ const Prescription = () => {
                         <td className="p-2 border">{pres.dosage}</td>
                         <td className="p-2 border">{pres.instructions}</td>
                         <td className="p-2 border">
-                          <button onClick={() => startEdit(index)} className="bg-blue-600 text-white px-2 py-1 rounded mr-2">Edit</button>
-                          <button onClick={() => deletePrescription(pres.id)} className="bg-red-600 text-white px-2 py-1 rounded">Delete</button>
+                          <button onClick={() => startEdit(index)} title='Edit' className="hover:text-blue-600 px-2 py-1 rounded mr-2"><BiEdit  size={15} /></button>
+                          <button onClick={() => deletePrescription(pres.id)} className="px-2 py-1 rounded hover:text-red-500" title='delete'><DeleteIcon size={15}/></button>
                         </td>
                       </>
                     )}

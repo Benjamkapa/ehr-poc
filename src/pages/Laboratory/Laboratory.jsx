@@ -30,12 +30,22 @@ const Laboratory = () => {
   });
 
   useEffect(() => {
+    const stored = sessionStorage.getItem('testOrders');
+    setTestOrders(stored ? JSON.parse(stored) : []);
+  }, []);
+
+  useEffect(() => {
     sessionStorage.setItem('testResults', JSON.stringify(testResults));
   }, [testResults]);
 
   const addTestOrder = (e) => {
     e.preventDefault();
-    if (!newOrder || !patientName) return toast.error('Enter patient name and select a test');
+    
+    if (!newOrder || !patientName) {
+      toast.error('Please enter patient name and select a test');
+      return;
+    }
+
     const order = {
       id: Date.now(),
       testName: newOrder,
@@ -43,10 +53,13 @@ const Laboratory = () => {
       status: 'pending',
       orderedAt: new Date().toLocaleString()
     };
-    setTestOrders([...testOrders, order]);
+
+    setTestOrders(prevOrders => [...prevOrders, order]);
+    
     setNewOrder('');
     setPatientName('');
-    toast.success(`Test order for "${newOrder}" added`);
+    
+    toast.success(`Test order for "${order.testName}" added successfully`);
   };
 
   const handleResultChange = (e) => {
@@ -217,11 +230,16 @@ const Laboratory = () => {
               className="border p-2 rounded"
               required
             >
-              <option value="">Select test</option>
-              {commonTests.map((test, idx) => (
-                <option key={idx} value={test}>{test}</option>
-              ))}
+              <option value="">Select a test</option>
+              {testOrders
+                .filter(order => order.status === 'pending')
+                .map(order => (
+                  <option key={order.id} value={order.testName}>
+                    {order.testName} - {order.patientName}
+                  </option>
+                ))}
             </select>
+
             <input
               type="text" name="resultValue" placeholder="Result Value"
               value={resultEntry.resultValue}

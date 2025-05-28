@@ -5,13 +5,13 @@ import { FaBarcode } from 'react-icons/fa';
 
 const Pharmacy = () => {
   const [inventory, setInventory] = useState([
-    { drugName: 'ARVs', quantity: 90, expiryDate: '2024-12-31', reorderLevel: 180, barcodeId: 'ARV090' },
+    { drugName: 'ARVs', quantity: 90, expiryDate: '2024-12-31', reorderLevel: 80, barcodeId: 'ARV090' },
     { drugName: 'Antibiotics', quantity: 50, expiryDate: '2025-01-15', reorderLevel: 30, barcodeId: 'ANT050' },
-    { drugName: 'Pain Relievers', quantity: 120, expiryDate: '2024-11-30', reorderLevel: 180, barcodeId: 'PRL120' },
+    { drugName: 'Pain Relievers', quantity: 120, expiryDate: '2024-11-30', reorderLevel: 80, barcodeId: 'PRL120' },
     { drugName: 'Antimalarials', quantity: 75, expiryDate: '2025-02-28', reorderLevel: 50, barcodeId: 'AML075' },
-    { drugName: 'Vaccines', quantity: 200, expiryDate: '2025-03-31', reorderLevel: 150, barcodeId: 'VAC200' },
+    { drugName: 'Vaccines', quantity: 200, expiryDate: '2025-03-31', reorderLevel: 50, barcodeId: 'VAC200' },
     { drugName: 'Insulin', quantity: 30, expiryDate: '2024-10-15', reorderLevel: 20, barcodeId: 'INS030' },
-    { drugName: 'HIV', quantity: 40, expiryDate: '2024-09-30', reorderLevel: 125, barcodeId: 'HIV040' },
+    { drugName: 'HIV', quantity: 40, expiryDate: '2024-09-30', reorderLevel: 25, barcodeId: 'HIV040' },
     { drugName: 'HIV', quantity: 40, expiryDate: '2024-09-30', reorderLevel: 25, barcodeId: 'HIV040' },
     { drugName: 'Antidepressants', quantity: 60, expiryDate: '2025-04-15', reorderLevel: 40, barcodeId: 'ANT060' },
     { drugName: 'Antihypertensives', quantity: 80, expiryDate: '2024-12-01', reorderLevel: 60, barcodeId: 'HTN080' },
@@ -315,11 +315,12 @@ const Pharmacy = () => {
     // Show drug details in a toast notification
     toast.success(
       <div>
-        <h4 className="font-bold">Drug Found:</h4>
+        <h4 className="font-bold">Drug Found </h4>
         <p>Name: {matchingDrug.drugName}</p>
         <p>Stock: {matchingDrug.quantity} units</p>
         <p>Expires: {matchingDrug.expiryDate}</p>
-      </div>
+      </div>,
+      {duration: 5000} // Show for 5 seconds
     );
 
     // Clear the input after scanning
@@ -532,25 +533,25 @@ const Pharmacy = () => {
 
   return (
     <div className="p-4 text-sm">
-      <h2 className="text-xl font-bold mb-4 uppercase">Pharmacy</h2>
+      <h2 className="text-xl font-bold mb-4 text-center uppercase">Pharmacy</h2>
       <StockAlerts />
       {/* <div className="p-4 bg-gray-50 rounded-lg"> */}
       {/* Tab Menu */}
-      <div className="flex gap-2 mb-4 text-s">
+      <div className="flex gap-2 mb-4 text-s border-b border-gray-400">
         <button 
-          className={`px-3 py-1 rounded ${activeTab === "inventory" ? "bg-blue-600 text-white" : "bg-gray-200"}`}
+          className={`px-3 py-1 rounded-t ${activeTab === "inventory" ? "border-blue-600 border-b text-blue-600" : "bg-gray-200"}`}
           onClick={() => setActiveTab("inventory")}
         >
           Inventory
         </button>
         <button 
-          className={`px-3 py-1 rounded ${activeTab === "prescriptions" ? "bg-blue-600 text-white" : "bg-gray-200"}`}
+          className={`px-3 py-1 rounded-t ${activeTab === "prescriptions" ? "border-blue-600 border-b text-blue-600" : "bg-gray-200"}`}
           onClick={() => setActiveTab("prescriptions")}
         >
           Prescriptions
         </button>
         <button 
-          className={`px-3 py-1 rounded ${activeTab === "history" ? "bg-blue-600 text-white" : "bg-gray-200"}`}
+          className={`px-3 py-1 rounded-t ${activeTab === "history" ? "border-blue-600 border-b text-blue-600" : "bg-gray-200"}`}
           onClick={() => setActiveTab("history")}
         >
           Dispensation History
@@ -711,7 +712,7 @@ const Pharmacy = () => {
                 {paginatedDispensationHistory.length === 0 ? (
                   <tr>
                     <td colSpan="6" className="text-center p-4 text-gray-500">
-                      No dispensation history available
+                      No dispensation done yet
                     </td>
                   </tr>
                 ) : (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BsTrash3, BsPencilSquare } from 'react-icons/bs';
 import { toast, Toaster } from 'react-hot-toast';
+import { GoPlus } from 'react-icons/go';
 
 const Appointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -67,28 +68,46 @@ const Appointments = () => {
     setEditAppointmentIndex(null);
   };
 
+  const [showModal , setShowModal] = useState(false);
+
   return (
-    <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+    <div className='grid grid-cols-1 gap-6 mx-10'>
       <div className='col-span-2'>
         <h1 className='font-bold uppercase text-xl text-center mb-4'>Appointments</h1>
 
-        <section className='mx-5 px-5 py-5'>
-          <div className='mb-8 border p-4 rounded shadow-lg bg-gray-100'>
-            <h2 className='font-semibold text-lg mb-2'>Add Appointment</h2>
-            <form onSubmit={handleAppointmentSubmit} className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-              <input name='patientName' placeholder='Patient Name' className='rounded border hover:shadow p-2' required />
-              <input name='doctor' placeholder='Doctor' className='border p-2 rounded hover:shadow' required />
-              <input type='date' name='appointmentDate' className='border rounded p-2 hover:shadow' required />
-              <input name='reason' placeholder='Reason for Visit' className='rounded hover:shadow border p-2 md:col-span-2' />
-              <button type='submit' className='bg-blue-600 mx-auto text-white px-4 w-1/2 rounded-full py-2 hover:bg-blue-500 col-span-full'>
-                Add Appointment
+          {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl relative">
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl"
+            >
+              &times;
+            </button>
+            <h2 className='font-semibold text-lg mb-4'>Add Appointment</h2>
+            <form onSubmit={handleAppointmentSubmit} className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+              <input name='patientName' placeholder='Patient Name' className='rounded border p-2' required />
+              <input name='doctor' placeholder='Doctor' className='border p-2 rounded' required />
+              <input type='date' name='appointmentDate' className='border rounded p-2' required />
+              <input name='reason' placeholder='Reason for Visit' className='rounded border p-2 md:col-span-2' />
+              <button
+                type='submit'
+                className='bg-blue-600 mx-auto text-white px-4 w-1/2 rounded-full py-2 hover:bg-blue-500 col-span-full'
+              >
+                Save Appointment
               </button>
             </form>
           </div>
-        </section>
+        </div>
+      )}
+
 
         <section className='mx-5 px-5'>
-          <h2 className='font-semibold text-lg mb-2'>Appointments List</h2>
+
+          <div className='flex justify-between'>
+            <h2 className='font-semibold text-lg mb-2'></h2>
+            <GoPlus className='text-2xl text-blue-500 mb-4 cursor-pointer hover:text-green-600' title='Add Appointment' onClick={() => setShowModal(true)} />
+          </div>
           <table className='w-full border table-auto bg-gray-100 shadow-lg'>
             <thead>
               <tr className='bg-slate-400'>

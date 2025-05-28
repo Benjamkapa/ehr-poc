@@ -108,7 +108,7 @@ const Referrals = () => {
         pagination={{ pageSize: 4 }}
         scroll={{ x: true }}
       />
-      <Divider orientation="left">Referral Summary</Divider>
+      {/* <Divider orientation="left">Referral Summary</Divider>
 
       <Card>
         <CardHeader>
@@ -129,7 +129,7 @@ const Referrals = () => {
             <p>No referrals yet.</p>
           )}
         </CardContent>
-      </Card>
+      </Card> */}
      </div>
     </div>
   );
