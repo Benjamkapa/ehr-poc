@@ -35,6 +35,7 @@ const Prescription = () => {
     saveToStorage(updated);
     setNewPrescription({ patientName: '', medication: '', dosage: '', instructions: '' });
     toast.success('Prescription added');
+    setShowModal(false);
   };
 
   const deletePrescription = (id) => {

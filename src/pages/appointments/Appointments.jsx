@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { BsTrash3, BsPencilSquare } from 'react-icons/bs';
 import { toast, Toaster } from 'react-hot-toast';
 import { GoPlus } from 'react-icons/go';
+import { SaveIcon } from 'lucide-react';
+import { TiCancel } from 'react-icons/ti';
 
 const Appointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -33,6 +35,7 @@ const Appointments = () => {
     setAppointments(updatedData);
     form.reset();
     toast.success('Appointment added successfully!');
+    setShowModal(false);
   };
 
   const deleteAppointment = (index) => {
@@ -164,9 +167,9 @@ const Appointments = () => {
                             className='border p-1 w-full'
                           />
                         </td>
-                        <td className='p-2 border'>
-                          <button onClick={saveEditedAppointment} className='bg-green-600 text-white p-1 rounded'>Save</button>
-                          <button onClick={cancelEditAppointment} className='bg-red-600 text-white p-1 rounded ml-2'>Cancel</button>
+                        <td className='p-2 border flex-row'>
+                          <button onClick={saveEditedAppointment} className='bg-green-600 text-white p-1 rounded'><SaveIcon size={12}/></button>
+                          <button onClick={cancelEditAppointment} className='bg-red-600 text-white p-1 rounded ml-2'><TiCancel/></button>
                         </td>
                       </>
                     ) : (
