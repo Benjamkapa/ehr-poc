@@ -27,7 +27,10 @@ import { FaPerson } from "react-icons/fa6";
 const staticMenuItems = [
   { icon: <MdDashboard size={20} />, label: "Dashboard", path: "/app", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
   { icon: <GiArchiveRegister size={20} /> , label: "Registry", path: "/app/registry", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
+  { icon: <FaWpforms size={20} /> , label: "Triage", path: "/app/triage", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
+  
   {
+
     icon: <MdMedicalInformation   size={20} />,
     label: "Medical Record Tab",
     path: "/app/treatment-plan",
@@ -44,7 +47,6 @@ const staticMenuItems = [
       "triage nurse",
     ],
   },
-  { icon: <FaWpforms size={20} /> , label: "Triage", path: "/app/triage", roles: ["admin", "doctor", "nurse", "lab technician", "hospital administrator"] },
   { icon: <SlCalender size={20} />, label: "Appointments", path: "/app/appointments", roles: ["admin", "doctor", "nurse", "receptionist", "pharmacist", "lab technician", "cashier", "hospital administrator", "patient", "triage nurse"] },
   { icon: <BsPrescription2 size={20} />, label: "Prescription", path: "/app/prescription", roles: ["admin", "doctor", "pharmacist", "hospital administrator"] },
   { icon: <VscReferences size={20} />, label: "Referrals", path: "/app/referrals", roles: ["admin", "doctor", "nurse", "receptionist", "hospital administrator"] },
