@@ -12,7 +12,7 @@ const Appointments = () => {
     doctor: '',
     appointmentDate: '',
     reason: '',
-    status: 'appointed',
+    status: 'approved',
   });
   const [showModal, setShowModal] = useState(false);
 
@@ -20,6 +20,35 @@ const Appointments = () => {
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("appointments") || "[]");
     setAppointments(storedData);
+    if (storedData.length === 0) {
+      const dummyAppointments = [
+        {
+          patientName: "John Doe",
+          doctor: "Dr. Smith",
+          appointmentDate: "2025-06-01",
+          reason: "Routine Checkup",
+          status: "approved",
+        },
+        {
+          patientName: "Jane Wanjiku",
+          doctor: "Dr. Patel",
+          appointmentDate: "2025-06-02",
+          reason: "Fever and Cough",
+          status: "pending",
+        },
+        {
+          patientName: "Ali Mwangi",
+          doctor: "Dr. Kimani",
+          appointmentDate: "2025-06-03",
+          reason: "Follow-up",
+          status: "cancelled",
+        },
+      ];
+      localStorage.setItem("appointments", JSON.stringify(dummyAppointments));
+      setAppointments(dummyAppointments);
+    } else {
+      setAppointments(storedData);
+    }
   }, []);
 
   // Whenever appointments change, update localStorage
@@ -75,6 +104,7 @@ const Appointments = () => {
   const cancelEditAppointment = () => {
     setEditAppointmentIndex(null);
   };
+  
 
   return (
     <div className='grid grid-cols-1 gap-6 mx-10'>
@@ -97,7 +127,7 @@ const Appointments = () => {
                 <input type='date' name='appointmentDate' className='border rounded p-2' required />
                 <input name='reason' placeholder='Reason for Visit' className='rounded border p-2' />
                 <select name='status' className='border rounded p-2' defaultValue='pending' required>
-                  <option value='appointed'>Appointed</option>
+                  <option value='approved'>Approved</option>
                   <option value='cancelled'>Cancelled</option>
                   <option value='pending'>Pending</option>
                 </select>
@@ -127,7 +157,7 @@ const Appointments = () => {
                 <th className='p-2 border'>Patient Name</th>
                 <th className='p-2 border'>Doctor</th>
                 <th className='p-2 border'>Date</th>
-                <th className='p-2 border'>Reason</th>
+                <th className='p-2 border'>Reason</th> 
                 <th className='p-2 border'>Status</th>
                 <th className='p-2 border'>Actions</th>
               </tr>
@@ -185,7 +215,7 @@ const Appointments = () => {
                             onChange={handleEditAppointmentChange}
                             className='border p-1 w-full'
                           >
-                            <option value='appointed'>Appointed</option>
+                            <option value='approved'>approved</option>
                             <option value='cancelled'>Cancelled</option>
                             <option value='pending'>Pending</option>
                           </select>

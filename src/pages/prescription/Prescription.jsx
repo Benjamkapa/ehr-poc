@@ -16,8 +16,8 @@ const Prescription = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalPrescriptions, setModalPrescriptions] = useState([]);
   const [modalPatientName, setModalPatientName] = useState('');
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
 
-  // Load data on mount
   useEffect(() => {
     const storedPrescriptions = JSON.parse(localStorage.getItem("prescriptions") || "[]");
     const storedAppointments = JSON.parse(localStorage.getItem("appointments") || "[]");
@@ -81,11 +81,12 @@ const Prescription = () => {
     setEditData({});
   };
 
-  const handleViewPrescriptions = (patientName) => {
+  const handleViewPrescriptions = (appointment) => {
     const allPrescriptions = JSON.parse(localStorage.getItem("prescriptions") || "[]");
-    const filtered = allPrescriptions.filter(p => p.patientName === patientName);
+    const filtered = allPrescriptions.filter(p => p.patientName === appointment.patientName);
     setModalPrescriptions(filtered);
-    setModalPatientName(patientName);
+    setModalPatientName(appointment.patientName);
+    setSelectedAppointment(appointment);
     setShowModal(true);
   };
 
@@ -119,7 +120,7 @@ const Prescription = () => {
                     <td className="p-2 border">{app.reason}</td>
                     <td className="p-2 border">
                       <button
-                        onClick={() => handleViewPrescriptions(app.patientName)}
+                        onClick={() => handleViewPrescriptions(app)}
                         className="bg-blue-600 text-white px-4 py-1 rounded"
                       >
                         Details
@@ -133,35 +134,48 @@ const Prescription = () => {
         </section>
 
         {/* Modal for showing prescription details */}
-        {showModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-lg relative">
-              <button
-                onClick={() => setShowModal(false)}
-                className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl"
-              >
-                &times;
-              </button>
-              <h2 className="font-semibold mb-4 text-lg text-center">
-                Detailed Prescription for {modalPatientName}
-              </h2>
+        {showModal && selectedAppointment && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl relative overflow-y-auto max-h-screen">
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl"
+                >
+                  &times;
+                </button>
+                <h2 className="font-semibold mb-4 text-xl text-center">
+                  {modalPatientName} Detail
+                </h2>
 
-              <div className="bg-gray-100 p-4 rounded shadow-inner">
-                {modalPrescriptions.length === 0 ? (
-                  <p className="text-center text-gray-600">No prescriptions available for this patient.</p>
-                ) : (
-                  <ul className="list-disc pl-6 space-y-2 text-gray-700">
-                    {modalPrescriptions.map(p => (
-                      <li key={p.id}>
-                        <strong>Medication:</strong> {p.medication}, <strong>Dosage:</strong> {p.dosage}, <strong>Instructions:</strong> {p.instructions}
-                      </li>
-                    ))}
-                  </ul>
+                {/* Appointment Details */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded shadow mb-4 text-sm text-gray-800">
+                  <div><strong>Doctor:</strong> {selectedAppointment.doctor}</div>
+                  <div><strong>Date:</strong> {selectedAppointment.appointmentDate}</div>
+                  <div><strong>Reason:</strong> {selectedAppointment.reason}</div>
+                  <div><strong>Visit Type:</strong> {selectedAppointment.visitType || 'N/A'}</div>
+                  <div><strong>Department:</strong> {selectedAppointment.department || 'N/A'}</div>
+                  <div><strong>Allergies:</strong> {selectedAppointment.allergies || 'None reported'}</div>
+                  <div className="md:col-span-2">
+                    <strong>Doctor's Notes:</strong> <p>{selectedAppointment.notes || 'No notes added'}</p>
+                  </div>
+                </div>
+
+                {/* Vitals */}
+                {selectedAppointment.vitals && (
+                  <div className="bg-blue-50 p-4 rounded shadow mb-4 text-sm text-blue-900">
+                    <h3 className="font-semibold mb-2">Vitals</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div><strong>Temperature:</strong> {selectedAppointment.vitals.temperature} °C</div>
+                      <div><strong>Pulse:</strong> {selectedAppointment.vitals.pulse} bpm</div>
+                      <div><strong>Blood Pressure:</strong> {selectedAppointment.vitals.bp}</div>
+                      <div><strong>Weight:</strong> {selectedAppointment.vitals.weight} kg</div>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
-          </div>
-        )}
+          )}
+
       </div>
     </div>
   );
